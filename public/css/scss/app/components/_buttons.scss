@@ -1,0 +1,64 @@
+// ==============================================
+// BUTTONS
+// ==============================================
+
+// Vars
+$btnMainTextColor: $white;
+$btnMainBg: $blueRegal;
+$btnMainBorder: $white;
+$btnMainHoverBg: darken($blueRegal, 5%);
+$btnMainHoverBorder: $white;
+
+// GENERAL BUTTON
+.btn {
+  @extend .bold;
+  @include effect(all, 0.5s, ease);
+  @include box-shadow(0px 1px 1px 0px rgba(0,0,0,0.75));
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1.2;
+  padding: 10px 25px 10px 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-align: center;
+
+  // MAIN BUTTON
+  &.btn-main {
+    color: $btnMainTextColor;
+    border: 3px solid $btnMainBorder;
+
+    &:hover, &:focus {
+      border-color: $btnMainHoverBorder;
+      color: $btnMainHoverBg;
+
+      &:after {
+        left: 12px;
+      }
+    }
+  }
+
+  // ALTERNATE BUTTON
+  &.btn-alternate {
+    // Use if alternate button
+  }
+
+}
+
+// ==============================================
+// MOBILE
+// ==============================================
+@include mobile {
+
+  .btn {
+
+    &.btn-main {
+      font-size: 90%;
+
+      &:after {
+        background: none;
+        display: none;
+      }
+    }
+  }
+
+}

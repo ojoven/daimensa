@@ -1,0 +1,25 @@
+// ==============================================
+// FRONT PAGE
+// ==============================================
+// Custom styles applied to the home page
+
+.home {
+
+  // Intro text
+  .intro {
+
+    font-size: 30px;
+
+    > span {
+      display: block;
+    }
+
+    .text-var1 {
+      font-size: 65%;
+      line-height: 1.2;
+      color: $greySilver;
+    }
+
+  }
+
+}

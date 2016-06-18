@@ -1,0 +1,45 @@
+// ==============================================
+// COLORS
+// ==============================================
+
+// FIRST WE DEFINE DESCRIPTIVE COLORS
+// Color names provided by http://chir.ag/projects/name-that-color/
+// The method to create the name is: "Closest standard color" name + "Name that color" name (brown + dark ebony)
+$white: #ffffff;
+$creamSatinLinen: #E1DECE;
+$greyDusty: #999;
+$greySilver: #ccc;
+$blueRegal: #004179;
+$bluePrussian: #002d5b;
+$yellowCorn: #e8ac07;
+$redDarkTan: #711216;
+$redThunderbird: #CA1010;
+$black: #000;
+$blackTundora: #444;
+
+// Gradients
+%redGradient {
+  //@include bbg(top, bottom, $redTamarillo, $redDarkTan);
+}
+
+
+// NOW WE DEFINE FUNCTIONS
+
+// General functions
+$mainColor: $blueRegal;
+$alternativeColor: $white;
+$blackLight: $blackTundora;
+$underlineColor: $greyDusty;
+$socialIconsBgHover: $greySilver;
+
+// Note: custom function colors are included in their belonging files
+
+
+// ==============================================
+// MOBILE
+// ==============================================
+@include mobile {
+
+  // To be extended on mobile media queries
+
+}
