@@ -1,3 +1,22 @@
 // ==============================================
 // HEADER
 // ==============================================
+
+// $headerHeight global: defined in _variables.scss
+
+// Main Header
+header {
+  text-align: center;
+  background: $mainColor;
+  height: $headerHeight;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  // Text logo
+  h1 {
+    font-size: 20px;
+    color: $white;
+    margin-top: 10px;
+  }
+}

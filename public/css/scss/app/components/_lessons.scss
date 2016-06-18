@@ -1,0 +1,52 @@
+// ==============================================
+// LESSONS
+// ==============================================
+
+$lessonWidth: 300px;
+$lessonHeight: 200px;
+
+.lesson {
+
+  width: $lessonWidth;
+  height: $lessonHeight;
+  margin: 0 auto;
+
+  @include br(5px);
+
+  .body {
+    border: 1px solid $greySilver;
+  }
+
+}
+
+// YouTube
+.lesson.youtube {
+
+  .thumbnail-container {
+
+    width: 300px;
+    height: 200px;
+    position: relative;
+
+    &:after {
+
+      @include center();
+      content: '\f16a';
+      font-family: FontAwesome;
+      color: $white;
+      font-size: 70px;
+
+    }
+
+    .thumbnail {
+
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+  }
+
+}

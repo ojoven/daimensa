@@ -5,6 +5,7 @@
 
 // Vars
 $containerMaxWidth: 1180px;
+$marginToHeader: 20px;
 
 .container {
   position: relative;
@@ -17,6 +18,9 @@ $containerMaxWidth: 1180px;
   width: 100%;
   max-width: $containerMaxWidth;
   text-align: center;
+  margin: 0 auto;
+  position: relative;
+  top: $headerHeight + $marginToHeader;
 }
 
 // ==============================================

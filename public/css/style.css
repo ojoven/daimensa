@@ -338,26 +338,29 @@ input[type="checkbox"] {
   width: 100%; }
 
 /** LAYOUT **/
-/* line 9, scss/app/layout/_container.scss */
+/* line 10, scss/app/layout/_container.scss */
 .container {
   position: relative;
   max-width: 1180px;
   margin: 0 auto;
   text-align: center; }
 
-/* line 16, scss/app/layout/_container.scss */
+/* line 17, scss/app/layout/_container.scss */
 #main-container {
   width: 100%;
   max-width: 1180px;
-  text-align: center; }
+  text-align: center;
+  margin: 0 auto;
+  position: relative;
+  top: 70px; }
 
 @media screen and (max-width: 1200px) {
-  /* line 29, scss/app/layout/_container.scss */
+  /* line 33, scss/app/layout/_container.scss */
   .container {
     max-width: 100%;
     padding: 0 1.5%; }
 
-  /* line 35, scss/app/layout/_container.scss */
+  /* line 39, scss/app/layout/_container.scss */
   #slider .container {
     padding: 0; } }
 /* line 10, scss/app/layout/_grid.scss */
@@ -367,6 +370,20 @@ input[type="checkbox"] {
   /* line 13, scss/app/layout/_grid.scss */
   .grid.row50 > *:first-child {
     margin-right: 4%; }
+
+/* line 8, scss/app/layout/_header.scss */
+header {
+  text-align: center;
+  background: #004179;
+  height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%; }
+  /* line 17, scss/app/layout/_header.scss */
+  header h1 {
+    font-size: 20px;
+    color: #ffffff;
+    margin-top: 10px; }
 
 /** PAGES **/
 /* line 9, scss/app/pages/_home.scss */
@@ -479,6 +496,45 @@ input[type="checkbox"] {
     .btn.btn-main:after {
       background: none;
       display: none; } }
+/* line 8, scss/app/components/_lessons.scss */
+.lesson {
+  width: 300px;
+  height: 200px;
+  margin: 0 auto;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+  /* line 16, scss/app/components/_lessons.scss */
+  .lesson .body {
+    border: 1px solid #ccc; }
+
+/* line 25, scss/app/components/_lessons.scss */
+.lesson.youtube .thumbnail-container {
+  width: 300px;
+  height: 200px;
+  position: relative; }
+  /* line 31, scss/app/components/_lessons.scss */
+  .lesson.youtube .thumbnail-container:after {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    content: '\f16a';
+    font-family: FontAwesome;
+    color: #ffffff;
+    font-size: 70px; }
+  /* line 41, scss/app/components/_lessons.scss */
+  .lesson.youtube .thumbnail-container .thumbnail {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center; }
+
 /** PRINT **/
 /* line 6, scss/app/helpers/_print.scss */
 .just-print {

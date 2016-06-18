@@ -102,6 +102,13 @@
   @include translate(-50%, -50%);
 }
 
+@mixin center() {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  @include translate(-50%, -50%);
+}
+
 
 // TRANSFORMS
 @mixin transform($transforms) {
