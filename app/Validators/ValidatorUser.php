@@ -21,6 +21,19 @@ class ValidatorUser extends Model {
         return self::buildValidateResponse($validator);
     }
 
+    // SAVE SETTINGS
+    public static function validateSaveSettings($params) {
+
+        $validator = Validator::make($params, [
+            'mother_tongue' => 'required|min:1|max:2',
+            'languages' => 'required|min:1',
+        ]);
+
+        // TODO: Additional validation that mother_tongue and languages are ISO 681 codes
+
+        return self::buildValidateResponse($validator);
+    }
+
     // Auxiliar
     public static function buildValidateResponse($validator) {
 

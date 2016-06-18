@@ -1,11 +1,11 @@
 {
-  "name": "drupalmultisite",
+  "name": "Daimensa",
   "version": "0.0.1",
-  "description": "Themes for Drupal Multisite",
+  "description": "Daimensa",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Majestic Media Ltd.",
+  "author": "Mikel Torres Ugarte",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-contrib-compass": "^1.1.0",

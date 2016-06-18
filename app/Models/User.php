@@ -159,4 +159,35 @@ class User extends Model {
 
     }
 
+    /** SETTINGS **/
+    public function saveSettings($params) {
+
+        $data['success'] = true;
+
+        // Validate that we're getting the correct params
+        $validate = ValidatorUser::validateSaveSettings($params);
+        if (!$validate['valid']) {
+
+            $data['success'] = false;
+            $data['errors'] = $validate['errors'];
+            return $data;
+        }
+
+        // Let's check if the user is logged in
+        $user = Auth::user();
+        if (!$user) {
+            $data['success'] = false;
+            $data['errors'][] = "You must be logged in to perform this action";
+            return $data;
+        }
+
+        // Everything is correct, let's save the values
+        $user->mother_tongue = $params['mother_tongue'];
+        $user->languages = implode(',', $params['languages']);
+        $user->save();
+
+        return $data;
+
+    }
+
 }

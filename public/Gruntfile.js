@@ -50,12 +50,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default, to be used on development environments
     grunt.registerTask('default', ['compass', 'concat', 'watch']); // First we compile and concat JS and then we watch
 
     // Post Commit, to be executed after commit
-    grunt.registerTask('deploy', ['concat', 'uglify', 'compass:prod']);
+    grunt.registerTask('deploy', ['concat', 'uglify', 'compass']);
 
 };

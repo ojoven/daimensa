@@ -4,3 +4,13 @@
 Homestead.yaml
 Homestead.json
 .env
+.idea
+config/settings.php
+data/fr/htmls/*
+!data/fr/htmls/README.md
+data/fr/conjugations/*
+!data/fr/conjugations/README.md
+data/fr/tmp/*
+.env
+public/node_modules
+public/.sass-cache
