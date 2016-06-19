@@ -5,22 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
 
-    // Save Image from form
-    public function saveImageUserFromForm($fileTmpName, $fileName) {
-
-        $pathToUserImages = $this->_getUserImagesPath();
-        $target = $pathToUserImages . $fileName;
-
-        // Save image
-        $result = move_uploaded_file($fileTmpName, $target);
-
-        // Change permissions
-        chmod($target, 0755);
-
-        return $result;
-    }
-
-    // Save Image from file (used for Facebook and Google)
+    // Save Image from file (used for Facebook login)
     public function saveImageUserFromFile($file, $fileName) {
 
         $pathToUserImages = $this->_getUserImagesPath();

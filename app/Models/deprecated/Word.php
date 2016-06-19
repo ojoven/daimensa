@@ -2,9 +2,67 @@
 
 namespace App\Models;
 
+use App\Models\Wiktionary\WiktionaryForm;
+use App\Models\Google\GoogleTranslate;
+use App\Models\Forvo\Forvo;
+use App\Models\Wiktionary\WiktionaryWord;
+use App\Models\Wiktionary\WiktionaryWordAdjective;
+use App\Models\Wiktionary\WiktionaryWordFormVerb;
+use App\Models\Wiktionary\WiktionaryWordHtml;
+use App\Models\Wiktionary\WiktionaryWordSustantive;
+use App\Models\Wiktionary\WiktionaryWordVerb;
+use App\Models\Words\FormVerb;
+use App\Models\Yahoo\YahooWord;
+use App\Models\Others\Glosbe;
+use App\Lib\Functions;
+
+use App\Models\Words\Sustantive;
+use App\Models\Words\Adjective;
+use App\Models\Words\Verb;
+
+use Illuminate\Database\Eloquent\Model;
+
 class Word extends Model {
 
     const MAX_NUM_FREQUENT = 35000;
+
+    public function getBunchWords($params) {
+
+        $words = $this->_getBunchWordsSimple($params);
+        $completeWords = array();
+        foreach ($words as $word) {
+            $completeWord = $this->getAllInfoWord($word);
+            array_push($completeWords, $completeWord);
+        }
+
+        return $completeWords;
+
+    }
+
+    private function _getBunchWordsSimple($params) {
+
+        // Here possible testing
+        //$words = array('sorcière');
+        //return $words;
+
+        $words = array();
+        $baseWords = json_decode(file_get_contents(base_path() . '/data/' . $_SESSION['fromLanguage'] . '/jsons/frequentwords.json'), true);
+        $keys = array_keys($baseWords);
+
+        $numWords = $params['numWords'];
+        while (count($words)<$numWords) {
+
+            $maxNum = min(self::MAX_NUM_FREQUENT, count($baseWords)-1);
+            $random = rand(0, $maxNum);
+            if (!isset($words[$keys[$random]])) {
+                array_push($words, $keys[$random]);
+            }
+
+        }
+
+        return $words;
+
+    }
 
     // Get all info
     public function getAllInfoWord($word) {
@@ -33,6 +91,16 @@ class Word extends Model {
     public function getGeneralInfoWord($word) {
 
         $generalInfo = array();
+
+        // Google Translations
+        /**
+        $googleTranslate = new GoogleTranslate();
+        $generalInfo['translations']['google'] = $googleTranslate->getTranslation($_SESSION['fromLanguage'], $_SESSION['toLanguage'], $word);
+
+        // Yahoo Searches
+        $yahoo = new YahooWord();
+        $generalInfo['searches']['yahoo'] = $yahoo->getInfoWordYahoo($word);
+        **/
 
         // Wiktionary text pronunciation + Forvo pronunciations
         $wiktionaryWord = new WiktionaryWord();

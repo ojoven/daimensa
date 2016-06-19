@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Wiktionary;
+namespace App\Builder\Wiktionary;
 use App\Lib\DomFunctions;
 
 /** Common functions for the different kind of words **/

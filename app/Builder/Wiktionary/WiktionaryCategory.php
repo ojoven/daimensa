@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models\Wiktionary;
+namespace App\Builder\Wiktionary;
 use App\Lib\WordFunctions;
 
-class WiktionaryCategory extends \Illuminate\Database\Eloquent\Model {
+class WiktionaryCategory {
 
     /** GET WORDS CATEGORY **/
     public function getWordsCategory($params) {

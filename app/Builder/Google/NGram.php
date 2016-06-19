@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Google;
+namespace App\Builder\Google;
 
 class NGram {
 
     /** GOOGLE N-GRAM ONTOLOGY **/
-// Retrieve
+    // Retrieve
     function getWordsNgram($ngram) {
 
         $path = base_path() . "/data/" . LANGUAGE . "/n-grams/final/" . $ngram . "gram/words.json";

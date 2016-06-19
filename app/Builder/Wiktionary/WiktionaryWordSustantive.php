@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Wiktionary;
+namespace App\Builder\Wiktionary;
 use App\Lib\DomFunctions;
 
 class WiktionaryWordSustantive extends WiktionaryWord {

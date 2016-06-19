@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Log;
-use App\Models\Builder;
+use App\Builder\Builder;
 use Illuminate\Console\Command;
 
 class BuilderCommand extends Command

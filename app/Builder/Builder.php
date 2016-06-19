@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Builder;
 
-use App\Models\Twitter\Twitter;
 use Log;
-use App\Models\Wiktionary\WiktionaryCategory;
-use App\Models\Wiktionary\WiktionaryLanguageSection;
+use App\Builder\Wiktionary\WiktionaryCategory;
+use App\Builder\Wiktionary\WiktionaryLanguageSection;
 use Illuminate\Database\Eloquent\Model;
-require_once app_path() . '/Lib/Vendor/simple_html_dom.php';
-require_once base_path() . '/config/settings.php';
 
 class Builder extends Model {
 
@@ -33,15 +30,14 @@ class Builder extends Model {
                 $this->_loadConfigurationFile($language);
                 // TODO: create ontology wikipedia
                 break;
-            case 'save_tweets':
-                $this->_loadConfigurationFile($language);
-                $this->saveTweets();
+            case 'test':
+                echo Log::info('Woks OK');
                 break;
         }
 
     }
 
-    /** TASK 1: SAVE WORD HTMLS **/
+    /** TASK 1: SAVE WORDS TO DATABASE **/
     public function saveWords() {
 
         $words = $this->_getAllWordsFromCategories();
@@ -59,7 +55,6 @@ class Builder extends Model {
         $nonValidWords = array();
 
         $wiktionaryCategory = new WiktionaryCategory();
-
 
         // Retrieve valid categories
         foreach ($categories as $category) {
@@ -97,18 +92,6 @@ class Builder extends Model {
         $wiktionaryLanguageSection->saveWordHtmlJustLanguage($words, $params);
 
     }
-
-    /** Further step, save twits **/
-    public function saveTweets() {
-
-        $wordListModel = new WordList();
-        $words = $wordListModel->getAllFrequentWords();
-
-        $twitterModel = new Twitter();
-        $twitterModel->getTweetsForWord('maison');
-
-    }
-
 
     /** AUXILIAR **/
     private function _loadConfigurationFile($language) {
