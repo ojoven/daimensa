@@ -13,26 +13,24 @@ class Builder extends Model {
     // Build cards for a word
     public function build($task, $language) {
 
-        // Get Behaviour
+        // Get Language Builder
         $languageBuilder = LanguageBuilderFactory::getLanguageBuilder($language);
+
+        // Load Settings
         $languageBuilder->loadSettings();
 
         switch ($task) {
 
             case 'save_words':
-                $this->_loadConfigurationFile($language);
-                $this->saveWords();
+                $languageBuilder->saveWords();
                 break;
             case 'save_conjugations':
-                $this->_loadConfigurationFile($language);
                 // TODO: save conjugations
                 break;
             case 'save_words_and_forms':
-                $this->_loadConfigurationFile($language);
                 // TODO: save words and forms
                 break;
-            case 'create_ontology':
-                $this->_loadConfigurationFile($language);
+            case 'save_ngrams':
                 // TODO: create ontology wikipedia
                 break;
             case 'test':
@@ -45,18 +43,18 @@ class Builder extends Model {
     /** TASK 1: SAVE WORDS TO DATABASE **/
     public function saveWords() {
 
-        $words = $this->_getAllWordsFromCategories();
-        $this->_saveWords($words);
+        $words = $this->getAllWordsFromCategories();
+        //$this->_saveWords($words);
 
     }
 
     /** 1st step, get words **/
-    private function _getAllWordsFromCategories() {
+    protected function getAllWordsFromCategories() {
 
-        $categories = getCategories();
+        $categories = $this->getCategories();
         $words = array();
 
-        $nonValidCategories = getInvalidCategories();
+        $nonValidCategories = $this->getInvalidCategories();
         $nonValidWords = array();
 
         $wiktionaryCategory = new WiktionaryCategory();
@@ -99,18 +97,6 @@ class Builder extends Model {
     }
 
     /** AUXILIAR **/
-    private function _loadConfigurationFile($language) {
-
-        $path = base_path('config/builder/' . $language . "_settings.php");
-        if (file_exists($path)) {
-            require_once $path;
-        } else {
-            Log::info('You must create a {lang}_settings.php file on /config/builder/ folder');
-            die();
-        }
-
-    }
-
     private function _getParamsFromCategory($category) {
 
         $params['category'] = $category;

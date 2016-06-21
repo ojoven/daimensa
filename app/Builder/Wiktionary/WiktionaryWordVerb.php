@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder\Wiktionary;
+use App\Builder\SimpleHtmlDom;
 use App\Lib\Functions;
 use App\Lib\WordFunctions;
 use App\Lib\DomFunctions;
@@ -52,13 +53,13 @@ class WiktionaryWordVerb extends WiktionaryWord {
         $path = $pathDir . "/" . $word;
         if (file_exists($path)) {
             $content = file_get_contents($path);
-            $html = str_get_html($content);
+            $html = SimpleHtmlDom::str_get_html($content);
             return ($html) ? $html : false;
         } else {
 
             $url = WIKTIONARY_CONJUGATIONS_URL_BASE . $word;
             $content = @file_get_contents($url);
-            $html = str_get_html($content);
+            $html = SimpleHtmlDom::str_get_html($content);
 
             if ($html) {
 

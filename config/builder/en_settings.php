@@ -1,8 +1,7 @@
 <?php
 
-return;
 /** LANGUAGE SETTINGS **/
-define('LANGUAGE', 'fr');
+define('LANGUAGE', 'en');
 define('LANGUAGE_MARKET_YAHOO', 'fr-fr');
 define('TRANSLATE_LANGUAGES', 'en,es'); // Not very scalable
 
@@ -88,3 +87,7 @@ define('WIKTIONARY_CONJUGATIONS_URL_BASE', 'http://fr.wiktionary.org/wiki/Annexe
 
 // CATEGORIES
 define('WIKTIONARY_CATEGORY_VERBS', 'Verbes_en_fran%C3%A7ais');
+
+// Wiktionary category urls to retrieve the words from, we'll base on grammar supra category, from where we'll retrieve
+// adjectives, adverbs, names, verbes, etc.
+// we leave out common names, etc.

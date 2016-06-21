@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder\Wiktionary;
+use App\Builder\SimpleHtmlDom;
 use App\Lib\WordFunctions;
 
 class WiktionaryRetriever {
@@ -25,7 +26,7 @@ class WiktionaryRetriever {
 
             foreach ($params['urls'] as $url) {
 
-                $html = file_get_html($url);
+                $html = SimpleHtmlDom::file_get_html($url);
 
                 // Let's go to the li's
                 $table = $html->find('#mw-content-text',0);

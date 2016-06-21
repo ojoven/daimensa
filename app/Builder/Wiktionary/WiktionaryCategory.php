@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder\Wiktionary;
+use App\Builder\SimpleHtmlDom;
 use App\Lib\WordFunctions;
 
 class WiktionaryCategory {
@@ -21,7 +22,7 @@ class WiktionaryCategory {
 
             // Get first page
             $urlFirstPage = $params['url_first_page'];
-            $html = file_get_html($urlFirstPage);
+            $html = SimpleHtmlDom::file_get_html($urlFirstPage);
 
             // Get words first page
             $pageWords = $this->_getWordsCategoryPage($html);
@@ -45,7 +46,7 @@ class WiktionaryCategory {
                 }
 
                 // Get words of the new html and add them
-                $html = file_get_html($url);
+                $html = SimpleHtmlDom::file_get_html($url);
                 $pageWords = $this->_getWordsCategoryPage($html);
                 echo $params['category'] . " words - page " . $page . PHP_EOL;
 

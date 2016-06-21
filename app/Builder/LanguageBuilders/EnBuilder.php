@@ -4,9 +4,9 @@ namespace App\Builder\LanguageBuilders;
 use App\Builder\Builder;
 use Log;
 
-class FrBuilder extends Builder {
+class EnBuilder extends Builder {
 
-	protected $lang = 'fr';
+	protected $lang = 'en';
 
 	// LOAD SETTINGS
 	public function loadSettings() {
@@ -118,5 +118,6 @@ class FrBuilder extends Builder {
 
 		return $categories;
 	}
+
 
 }

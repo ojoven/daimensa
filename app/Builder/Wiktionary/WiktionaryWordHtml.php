@@ -2,6 +2,7 @@
 
 namespace App\Builder\Wiktionary;
 use App\Lib\WordFunctions;
+use App\Builder\SimpleHtmlDom;
 
 class WiktionaryWordHtml {
 
@@ -11,7 +12,7 @@ class WiktionaryWordHtml {
         $path = base_path() . "/data/" . LANGUAGE . "/htmls/" . WordFunctions::getFirstCharacter($word) . "/" . $word . ".html";
         if (file_exists($path)) {
             $content = file_get_contents($path);
-            $html = str_get_html($content);
+            $html = SimpleHtmlDom::str_get_html($content);
             return ($html) ? $html : false;
 
         } else {
@@ -22,7 +23,7 @@ class WiktionaryWordHtml {
 
             // Retrieve and return
             $content = @file_get_contents($url);
-            $html = str_get_html($content);
+            $html = SimpleHtmlDom::str_get_html($content);
             if ($html) {
                 // TODO: Save it
                 return $html;
