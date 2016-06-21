@@ -3,6 +3,7 @@
 namespace App\Builder;
 
 use Log;
+
 use App\Builder\Wiktionary\WiktionaryCategory;
 use App\Builder\Wiktionary\WiktionaryLanguageSection;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,10 @@ class Builder extends Model {
 
     // Build cards for a word
     public function build($task, $language) {
+
+        // Get Behaviour
+        $languageBuilder = LanguageBuilderFactory::getLanguageBuilder($language);
+        $languageBuilder->loadSettings();
 
         switch ($task) {
 
