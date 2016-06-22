@@ -1,11 +1,5 @@
 <?php
 
-return;
-/** LANGUAGE SETTINGS **/
-define('LANGUAGE', 'fr');
-define('LANGUAGE_MARKET_YAHOO', 'fr-fr');
-define('TRANSLATE_LANGUAGES', 'en,es'); // Not very scalable
-
 /** WIKTIONARY RELATED SETTINGS **/
 
 // Identifier language DOM Wiktionary
@@ -33,10 +27,6 @@ define('WIKTIONARY_VERBS_INDICATIVE', 'Indicatif');
 define('WIKTIONARY_VERBS_SUBJUNCTIVE', 'Subjonctif');
 define('WIKTIONARY_VERBS_CONDITIONAL', 'Conditionnel');
 define('WIKTIONARY_VERBS_IMPERATIVE', 'Imp.C3.A9ratif');
-
-
-// DOM messages
-define('WIKTIONARY_NEXT_PAGE', 'page suivante');
 
 // Identifiers forms DOM Wiktionary
 define('WIKTIONARY_ETIMOLOGY', '.C3.89tymologie');
@@ -82,9 +72,3 @@ define('WIKTIONARY_PROVERBE', 'Proverbe');
 
 define('WIKTIONARY_PRONOUN_PERSONAL', 'Pronom_personnel');
 define('WIKTIONARY_PRONOUN_UNDEFINED', 'Pronom_ind.C3.A9fini');
-
-define('WIKTIONARY_CATEGORY_URL_BASE', 'http://fr.wiktionary.org/wiki/Cat%C3%A9gorie:');
-define('WIKTIONARY_CONJUGATIONS_URL_BASE', 'http://fr.wiktionary.org/wiki/Annexe:Conjugaison_en_français/');
-
-// CATEGORIES
-define('WIKTIONARY_CATEGORY_VERBS', 'Verbes_en_fran%C3%A7ais');

@@ -18,6 +18,8 @@ class YahooWord {
         $args["images.q"] = $word;
         $args["format"] = "json";
         $args["count"] = "2";
+
+        define('LANGUAGE_MARKET_YAHOO', 'fr-fr');
         $args["market"] = LANGUAGE_MARKET_YAHOO;
 
         // Make the call to Yahoo endpoint via CURL

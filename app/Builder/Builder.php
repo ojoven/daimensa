@@ -10,19 +10,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Builder extends Model {
 
+    protected $lang;
+
     // Build cards for a word
     public function build($task, $language) {
+
+        // Set language
+        $this->lang = $language;
+
+        // Load Settings
+        $this->loadSettings();
 
         // Get Language Builder
         $languageBuilder = LanguageBuilderFactory::getLanguageBuilder($language);
 
-        // Load Settings
-        $languageBuilder->loadSettings();
-
         switch ($task) {
 
             case 'save_words':
-                $languageBuilder->saveWords();
+                $this->saveWords($languageBuilder);
                 break;
             case 'save_conjugations':
                 // TODO: save conjugations
@@ -40,21 +45,38 @@ class Builder extends Model {
 
     }
 
-    /** TASK 1: SAVE WORDS TO DATABASE **/
-    public function saveWords() {
+    public function loadSettings() {
 
-        $words = $this->getAllWordsFromCategories();
+        // Common settings to all languages
+        $pathCommonSettings = app_path('Builder/config/common_settings.php');
+        require_once $pathCommonSettings;
+
+        // Language custom settings
+        $path = app_path('Builder/config/' . $this->lang . '_settings.php');
+        if (file_exists($path)) {
+            require_once $path;
+        } else {
+            Log::info('You must create a ' . $this->lang . '_settings.php file on /config/builder/ folder');
+            die();
+        }
+
+    }
+
+    /** TASK 1: SAVE WORDS TO DATABASE **/
+    public function saveWords($languageBuilder) {
+
+        $words = $this->getAllWordsFromCategories($languageBuilder);
         //$this->_saveWords($words);
 
     }
 
     /** 1st step, get words **/
-    protected function getAllWordsFromCategories() {
+    protected function getAllWordsFromCategories($languageBuilder) {
 
-        $categories = $this->getCategories();
+        $categories = $languageBuilder->getCategories();
         $words = array();
 
-        $nonValidCategories = $this->getInvalidCategories();
+        $nonValidCategories = $languageBuilder->getInvalidCategories();
         $nonValidWords = array();
 
         $wiktionaryCategory = new WiktionaryCategory();
@@ -101,7 +123,7 @@ class Builder extends Model {
 
         $params['category'] = $category;
         $params['cache_path'] = base_path() . "/data/" . LANGUAGE . "/categories/" . $category . ".json";
-        $params['url_base'] = "http://" . LANGUAGE . ".wiktionary.org";
+        $params['url_base'] = 'http://' . $this->lang . '.wiktionary.org'; // We'll be using the FR version of Wiktionary as it was the first language scrapped
         $params['url_first_page'] = WIKTIONARY_CATEGORY_URL_BASE . $category;
         $params['next_page'] = WIKTIONARY_NEXT_PAGE;
 

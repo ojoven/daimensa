@@ -32,7 +32,7 @@ class WiktionaryCategory {
             $words = array_merge($words, $pageWords);
 
             // While next page
-            while (true) { // TODO: REMOVE THE LIMIT
+            while (true) {
 
                 // Log
                 $page++;

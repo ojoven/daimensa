@@ -7,6 +7,7 @@ class GoogleTranslate {
     public function getMultipleTranslations($fromLanguage, $word) {
 
         $translations = array();
+        define('TRANSLATE_LANGUAGES', 'en,es');
         $toLanguages = explode(",", TRANSLATE_LANGUAGES);
         foreach ($toLanguages as $toLanguage) {
             $translations[$toLanguage] = $this->getTranslation($fromLanguage, $toLanguage, $word);

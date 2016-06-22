@@ -6,21 +6,6 @@ use Log;
 
 class FrBuilder extends Builder {
 
-	protected $lang = 'fr';
-
-	// LOAD SETTINGS
-	public function loadSettings() {
-
-		$path = base_path('config/builder/' . $this->lang . "_settings.php");
-		if (file_exists($path)) {
-			require_once $path;
-		} else {
-			Log::info('You must create a ' . $this->lang . '_settings.php file on /config/builder/ folder');
-			die();
-		}
-
-	}
-
 	// Wiktionary category urls to retrieve the words from, we'll base on grammar supra category, from where we'll retrieve
 	// adjectives, adverbs, names, verbes, etc.
 	// we leave out common names, etc.
