@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 // Steps
 use App\Builder\Steps\SaveWordList;
 use App\Builder\Steps\SaveWordsHTML;
+use App\Builder\Steps\SaveConjugationsHTML;
 
 class Builder extends Model {
 
@@ -29,10 +30,11 @@ class Builder extends Model {
                 break;
             case 'save_words_html':
                 $step = new SaveWordsHTML();
-                $step->saveWordsHTML($languageBuilder);
+                $step->saveWordsHTML();
                 break;
-            case 'save_conjugations':
-                // TODO: save conjugations
+            case 'save_conjugations_html':
+                $step = new SaveConjugationsHTML();
+                $step->saveConjugationsHTML();
                 break;
             case 'save_words_and_forms':
                 // TODO: save words and forms

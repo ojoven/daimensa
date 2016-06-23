@@ -17,19 +17,11 @@ class WiktionaryWordHtml {
 
         } else {
 
-            // We get it from the URL
-            $urlBase = "http://" . LANGUAGE . ".wiktionary.org/wiki/";
-            $url = $urlBase . $word;
+            $params['cache'] = base_path() . "/data/" . LANGUAGE . "/htmls/";
+            $wiktionaryLanguageSection = new WiktionaryLanguageSection();
+            $html = $wiktionaryLanguageSection->saveWordJustLanguage($word, $params);
 
-            // Retrieve and return
-            $content = @file_get_contents($url);
-            $html = SimpleHtmlDom::str_get_html($content);
-            if ($html) {
-                // TODO: Save it
-                return $html;
-            }
-            return false;
-
+            return $html;
         }
 
     }

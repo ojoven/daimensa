@@ -3,7 +3,6 @@
 /** WIKTIONARY RELATED SETTINGS **/
 
 // Identifier language DOM Wiktionary
-define('WIKTIONARY_ID_LANGUAGE','Fran.C3.A7ais');
 define('WIKTIONARY_ID_COMMON_NAME', 'Nom_commun');
 define('WIKTIONARY_ID_VERB', 'Verbe');
 define('WIKTIONARY_ID_USE', 'emploi');

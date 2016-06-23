@@ -82,17 +82,19 @@ class WiktionaryWordVerb extends WiktionaryWord {
         $path = $pathDir . "/" . $word;
         if (!file_exists($path)) {
 
-            $word = str_replace("se ", "se_", $word); // To avoid errors on "se mallouser" style verbs
+            $word = str_replace(" ", "_", $word); // To avoid errors on "se mallouser" style verbs
 
             $url = WIKTIONARY_CONJUGATIONS_URL_BASE . $word;
-            $content = file_get_contents($url);
+            $content = @file_get_contents($url);
 
-            // Create the dir if not available
-            if (!is_dir($pathDir)) {
-                mkdir($pathDir);
+            if ($content) {
+                // Create the dir if not available
+                if (!is_dir($pathDir)) {
+                    mkdir($pathDir);
+                }
+
+                file_put_contents($path, $content);
             }
-
-            file_put_contents($path, $content);
         }
 
     }

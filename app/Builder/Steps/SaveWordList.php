@@ -22,7 +22,7 @@ class SaveWordList extends Model {
 		$wordList = new WordList();
 
 		// First, we check if the file exists
-		$pathFileWordList = $wordList->getPathWordList($languageBuilder);
+		$pathFileWordList = $wordList->getPathWordList();
 		$file = FileManager::getFile($pathFileWordList);
 		if (!$file) {
 
@@ -64,7 +64,7 @@ class SaveWordList extends Model {
 			FileManager::saveFile($pathFileWordList, json_encode($validWords));
 
 		} else {
-			Log::info('The word list for ' . $languageBuilder->getLanguage() . ' is already built');
+			Log::info('The word list for ' . LANGUAGE . ' is already built');
 			$validWords = json_decode($file, true);
 		}
 

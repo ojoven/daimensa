@@ -14,14 +14,14 @@ use App\Builder\WordList;
 class SaveWordsHTML extends Model {
 
 	/** 1st step, get words **/
-	public function saveWordsHTML($languageBuilder) {
+	public function saveWordsHTML() {
 
 		// Get the word list from previous step
 		$wordList = new WordList();
-		$words = $wordList->getWordList($languageBuilder);
+		$words = $wordList->getWordList();
 
 		// Define path Cache / Data files
-		$params['cache'] = base_path() . "/data/" . $languageBuilder->getLanguage() . "/htmls/";
+		$params['cache'] = base_path() . "/data/" . LANGUAGE . "/htmls/";
 
 		// Save the words
 		$wiktionaryLanguageSection = new WiktionaryLanguageSection();
