@@ -6,6 +6,8 @@ use Log;
 
 class FrBuilder extends Builder {
 
+	protected $language = 'fr';
+
 	// Wiktionary category urls to retrieve the words from, we'll base on grammar supra category, from where we'll retrieve
 	// adjectives, adverbs, names, verbes, etc.
 	// we leave out common names, etc.

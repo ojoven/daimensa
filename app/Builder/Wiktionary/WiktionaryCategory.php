@@ -3,6 +3,7 @@
 namespace App\Builder\Wiktionary;
 use App\Builder\SimpleHtmlDom;
 use App\Lib\WordFunctions;
+use App\Builder\FileManager;
 
 class WiktionaryCategory {
 
@@ -55,7 +56,7 @@ class WiktionaryCategory {
 
             // Let's save into the cache
             if (count($words)>0) {
-                file_put_contents($params['cache_path'], json_encode($words));
+                FileManager::saveFile($params['cache_path'], json_encode($words));
             }
 
         } else {
