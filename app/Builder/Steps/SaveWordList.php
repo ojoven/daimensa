@@ -1,7 +1,13 @@
 <?php
+/** ===========================================
+ * STEP1: SAVE WORD LIST
+ * ============================================**/
+// We'll save all the words from the language by extracting them from the Wiktionary
+// We'll use the Wiktionary Categories as base for the scrapping.
 
 namespace App\Builder\Steps;
 
+use App\Builder\WordList;
 use Log;
 
 use App\Builder\Wiktionary\WiktionaryCategory;
@@ -10,13 +16,13 @@ use App\Builder\FileManager;
 
 class SaveWordList extends Model {
 
-
-	/** 1st step, get words **/
+	/** 1st step, get word list **/
 	public function saveWordList($languageBuilder) {
 
+		$wordList = new WordList();
+
 		// First, we check if the file exists
-		$nameJson = 'word_list.json';
-		$pathFileWordList = base_path() . '/data/' . $languageBuilder->getLanguage() . '/jsons/' . $nameJson;
+		$pathFileWordList = $wordList->getPathWordList($languageBuilder);
 		$file = FileManager::getFile($pathFileWordList);
 		if (!$file) {
 
@@ -66,6 +72,7 @@ class SaveWordList extends Model {
 
 	}
 
+	// PARAMS
 	private function _getParamsFromCategory($category) {
 
 		$params['category'] = $category;

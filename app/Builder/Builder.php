@@ -2,16 +2,14 @@
 
 namespace App\Builder;
 
-use App\Builder\Steps\SaveWordList;
 use Log;
-
-use App\Builder\Wiktionary\WiktionaryCategory;
-use App\Builder\Wiktionary\WiktionaryLanguageSection;
 use Illuminate\Database\Eloquent\Model;
 
-class Builder extends Model {
+// Steps
+use App\Builder\Steps\SaveWordList;
+use App\Builder\Steps\SaveWordsHTML;
 
-    protected $lang;
+class Builder extends Model {
 
     // Build cards for a word
     public function build($task, $language) {
@@ -22,14 +20,16 @@ class Builder extends Model {
         // Load Settings
         $languageBuilder->loadSettings();
 
+        // TASKS / STEPS
         switch ($task) {
 
             case 'save_word_list':
                 $step = new SaveWordList();
                 $step->saveWordList($languageBuilder);
                 break;
-            case 'save_words':
-                $this->saveWords($languageBuilder);
+            case 'save_words_html':
+                $step = new SaveWordsHTML();
+                $step->saveWordsHTML($languageBuilder);
                 break;
             case 'save_conjugations':
                 // TODO: save conjugations
@@ -40,6 +40,8 @@ class Builder extends Model {
             case 'save_ngrams':
                 // TODO: create ontology wikipedia
                 break;
+            case 'save_to_db':
+                // TODO: We'll save the words, frequencies, ontologies, etc. into the database
             case 'test':
                 echo Log::info('Woks OK');
                 break;
@@ -47,6 +49,8 @@ class Builder extends Model {
 
     }
 
+    /** AUXILIAR FUNCTIONS **/
+    // LOAD SETTINGS
     public function loadSettings() {
 
         // Common settings to all languages
@@ -64,27 +68,9 @@ class Builder extends Model {
 
     }
 
+    // GET LANGUAGE
     public function getLanguage() {
         return $this->language;
-    }
-
-    /** TASK 1: SAVE WORDS TO DATABASE **/
-    public function saveWords($languageBuilder) {
-
-        $words = $this->getAllWordsFromCategories($languageBuilder);
-        //$this->_saveWords($words);
-
-    }
-
-
-
-    /** 2nd step, save words **/
-    public function _saveWords($words) {
-
-        $wiktionaryLanguageSection = new WiktionaryLanguageSection();
-        $params['cache'] = base_path() . "/data/" . LANGUAGE . "/htmls/";
-        $wiktionaryLanguageSection->saveWordHtmlJustLanguage($words, $params);
-
     }
 
 }

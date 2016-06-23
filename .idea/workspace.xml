@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="947c62c9-1ff0-4593-97dd-31371c336527" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Builder/AmazonS3.php" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Builder/FileManager.php" afterPath="$PROJECT_DIR$/app/Builder/FileManager.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Builder/Builder.php" afterPath="$PROJECT_DIR$/app/Builder/Builder.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/README.md" afterPath="$PROJECT_DIR$/data/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php" afterPath="$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php" afterPath="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
     </list>
     <ignored path="daimensa.iws" />
@@ -34,20 +34,18 @@
       <file leaf-file-name="Builder.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Builder/Builder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.5227275" vertical-offset="594" max-vertical-offset="1728">
-              <caret line="60" column="60" selection-start-line="60" selection-start-column="60" selection-end-line="60" selection-end-column="60" />
-              <folding>
-                <element signature="e#31#66#0#PHP" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-1.6363636" vertical-offset="0" max-vertical-offset="1476">
+              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="35" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileManager.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Builder/FileManager.php">
+      <file leaf-file-name="WordList.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Builder/WordList.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="738">
-              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+            <state vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="702">
+              <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -56,11 +54,55 @@
       <file leaf-file-name="SaveWordList.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-38.0" vertical-offset="0" max-vertical-offset="1530">
-              <caret line="57" column="51" selection-start-line="57" selection-start-column="51" selection-end-line="57" selection-end-column="51" />
+            <state vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="1656">
+              <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
               <folding>
-                <element signature="e#37#45#0#PHP" expanded="true" />
+                <element signature="e#6#129#0#PHP" expanded="true" />
+                <element signature="e#312#337#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SaveWordsHTML.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Builder/Steps/SaveWordsHTML.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-18.0" vertical-offset="0" max-vertical-offset="666">
+              <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+              <folding>
+                <element signature="e#6#126#0#PHP" expanded="true" />
+                <element signature="e#188#196#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WiktionaryLanguageSection.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.32951945" vertical-offset="0" max-vertical-offset="1674">
+              <caret line="16" column="69" selection-start-line="16" selection-start-column="69" selection-end-line="16" selection-end-column="69" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WordFunctions.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Lib/WordFunctions.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-12.444445" vertical-offset="402" max-vertical-offset="4392">
+              <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FileManager.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Builder/FileManager.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="738">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -88,59 +130,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/README.md">
           <provider editor-type-id="MarkdownPreviewEditor">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.08285385" vertical-offset="0" max-vertical-offset="869">
-              <caret line="4" column="51" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
+            <state vertical-scroll-proportion="-3.375" vertical-offset="0" max-vertical-offset="396">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common_settings.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Builder/config/common_settings.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.703704" vertical-offset="512" max-vertical-offset="1422">
-              <caret line="40" column="30" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WiktionaryCategory.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryCategory.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-38.0" vertical-offset="54" max-vertical-offset="2772">
-              <caret line="60" column="0" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-              <folding>
-                <element signature="e#41#71#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EnBuilder.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Builder/LanguageBuilders/EnBuilder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="1530">
-              <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FrBuilder.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Builder/LanguageBuilders/FrBuilder.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.6666665" vertical-offset="18" max-vertical-offset="2052">
-              <caret line="8" column="13" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="13" />
-              <folding>
-                <element signature="e#47#71#0#PHP" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -160,7 +158,6 @@
         <option value="$PROJECT_DIR$/app/Models/Image.php" />
         <option value="$PROJECT_DIR$/app/Models/Word.php" />
         <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryForm.php" />
-        <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php" />
         <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryWord.php" />
         <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryWordAdjective.php" />
         <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryWordFormVerb.php" />
@@ -187,13 +184,17 @@
         <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryCategory.php" />
         <option value="$PROJECT_DIR$/app/Builder/LanguageBuilders/EnBuilder.php" />
         <option value="$PROJECT_DIR$/app/Builder/LanguageBuilders/FrBuilder.php" />
-        <option value="$PROJECT_DIR$/app/Builder/Builder.php" />
-        <option value="$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php" />
         <option value="$PROJECT_DIR$/app/Builder/FileManager.php" />
         <option value="$PROJECT_DIR$/app/Builder/AmazonS3.php" />
         <option value="$PROJECT_DIR$/app/Builder/config/common_settings.php" />
         <option value="$PROJECT_DIR$/composer.json" />
         <option value="$PROJECT_DIR$/data/README.md" />
+        <option value="$PROJECT_DIR$/app/Builder/Steps/SaveWords.php" />
+        <option value="$PROJECT_DIR$/app/Builder/Builder.php" />
+        <option value="$PROJECT_DIR$/app/Builder/WordList.php" />
+        <option value="$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php" />
+        <option value="$PROJECT_DIR$/app/Builder/Steps/SaveWordsHTML.php" />
+        <option value="$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php" />
       </list>
     </option>
   </component>
@@ -276,7 +277,79 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="fr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fr" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="htmls" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="en" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daimensa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Builder" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -292,11 +365,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Builder/Steps" />
       <recent name="$PROJECT_DIR$/config" />
       <recent name="$PROJECT_DIR$/app/Builder/config" />
       <recent name="$PROJECT_DIR$/config/builder" />
       <recent name="$PROJECT_DIR$/app/Builder/LanguageBuilders" />
-      <recent name="$PROJECT_DIR$/app/Models/deprecated" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/data" />
@@ -415,27 +488,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="612">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Console/Commands/TestCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="540" max-vertical-offset="1782">
-          <caret line="39" column="33" selection-start-line="39" selection-start-column="33" selection-end-line="39" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder/Google/GoogleTranslate.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3333334" vertical-offset="0" max-vertical-offset="306">
-          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Builder/Google/NGram.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.814815" vertical-offset="338" max-vertical-offset="900">
@@ -703,14 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.3333333" vertical-offset="0" max-vertical-offset="1584">
-          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Builder/config/en_settings.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="144" max-vertical-offset="252">
@@ -755,38 +799,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder/Builder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5227275" vertical-offset="594" max-vertical-offset="1728">
-          <caret line="60" column="60" selection-start-line="60" selection-start-column="60" selection-end-line="60" selection-end-column="60" />
-          <folding>
-            <element signature="e#31#66#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Builder/config/common_settings.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.703704" vertical-offset="512" max-vertical-offset="1422">
           <caret line="40" column="30" selection-start-line="40" selection-start-column="30" selection-end-line="40" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-38.0" vertical-offset="0" max-vertical-offset="1530">
-          <caret line="57" column="51" selection-start-line="57" selection-start-column="51" selection-end-line="57" selection-end-column="51" />
-          <folding>
-            <element signature="e#37#45#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Builder/FileManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.0" vertical-offset="0" max-vertical-offset="738">
-          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -815,8 +831,70 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08285385" vertical-offset="0" max-vertical-offset="869">
-          <caret line="4" column="51" selection-start-line="4" selection-start-column="51" selection-end-line="4" selection-end-column="51" />
+        <state vertical-scroll-proportion="-3.375" vertical-offset="0" max-vertical-offset="396">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/FileManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="738">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/Builder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.6363636" vertical-offset="0" max-vertical-offset="1476">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/WordList.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.6666665" vertical-offset="0" max-vertical-offset="702">
+          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Lib/WordFunctions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.444445" vertical-offset="402" max-vertical-offset="4392">
+          <caret line="41" column="8" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/Steps/SaveWordList.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="1656">
+          <caret line="18" column="31" selection-start-line="18" selection-start-column="31" selection-end-line="18" selection-end-column="31" />
+          <folding>
+            <element signature="e#6#129#0#PHP" expanded="true" />
+            <element signature="e#312#337#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/Steps/SaveWordsHTML.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-18.0" vertical-offset="0" max-vertical-offset="666">
+          <caret line="27" column="52" selection-start-line="27" selection-start-column="52" selection-end-line="27" selection-end-column="52" />
+          <folding>
+            <element signature="e#6#126#0#PHP" expanded="true" />
+            <element signature="e#188#196#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Builder/Wiktionary/WiktionaryLanguageSection.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32951945" vertical-offset="0" max-vertical-offset="1674">
+          <caret line="16" column="69" selection-start-line="16" selection-start-column="69" selection-end-line="16" selection-end-column="69" />
           <folding />
         </state>
       </provider>

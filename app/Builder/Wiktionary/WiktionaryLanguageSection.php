@@ -12,8 +12,9 @@ class WiktionaryLanguageSection {
         foreach ($words as $index=>$word) {
 
             if (WordFunctions::isValidWord($word)) {
-                $this->saveWordJustLanguage($word, $params);
-                echo $index . "/" . $numWords . ": " . $word . PHP_EOL;
+                $result = $this->saveWordJustLanguage($word, $params);
+                $resultLog = ($result) ? "success" : "error";
+                echo $index . '/' . $numWords . ': ' . $word . ' --> ' . $resultLog . PHP_EOL;
             }
         }
 
@@ -39,10 +40,14 @@ class WiktionaryLanguageSection {
                     mkdir($pathWordDirectory);
                 }
 
-                file_put_contents($pathWord, $justLanguageHtml);
+                $result = file_put_contents($pathWord, $justLanguageHtml);
+
+                return $result;
             }
 
         }
+
+        return true;
 
     }
 
