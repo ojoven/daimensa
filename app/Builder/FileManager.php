@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Builder;
-
 use Log;
 
 class FileManager {
@@ -30,6 +29,7 @@ class FileManager {
 
 		// We now save the file
 		file_put_contents($path, $data);
+
 
 	}
 

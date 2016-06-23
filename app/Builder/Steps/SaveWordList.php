@@ -15,7 +15,8 @@ class SaveWordList extends Model {
 	public function saveWordList($languageBuilder) {
 
 		// First, we check if the file exists
-		$pathFileWordList = base_path() . '/data/' . $languageBuilder->getLanguage() . '/jsons/word_list.json';
+		$nameJson = 'word_list.json';
+		$pathFileWordList = base_path() . '/data/' . $languageBuilder->getLanguage() . '/jsons/' . $nameJson;
 		$file = FileManager::getFile($pathFileWordList);
 		if (!$file) {
 
