@@ -48,6 +48,12 @@ class WordFunctions {
 
     }
 
+    public static function wordForURL($word) {
+
+        return str_replace(' ', '_', $word);
+
+    }
+
     /** PARSERS **/
     // Remove first part before quote word
     public static function parseWordsRemoveQuote($words) {

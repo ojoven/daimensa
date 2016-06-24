@@ -115,57 +115,6 @@ function getWordsRemovedNonBaseWords($wordForms) {
 }
 
 
-function getBaseWords($wordForms) {
-
-    $pathBaseWordsJson = ROOT_PATH . "data/wiktionary/basewords.json";
-    if (!file_exists($pathBaseWordsJson)) {
-
-        $baseWords = array();
-
-        foreach ($wordForms as $wordForm) {
-
-            if (isset($wordForm['form_name']) && $wordForm['form_name']) {
-                $html = getHtmlWordWiktionary($wordForm['word']);
-                if ($html) {
-                    $baseWord = getBaseWord(WIKTIONARY_FORME_NOM_COMMUN, $html);
-                    array_push($baseWords, $baseWord);
-                    echo $wordForm['word'] . " -> " . $baseWord . PHP_EOL;
-                }
-            }
-
-            if (isset($wordForm['form_verb']) && $wordForm['form_verb']) {
-                $html = getHtmlWordWiktionary($wordForm['word']);
-                if ($html) {
-                    $baseWord = getBaseWord(WIKTIONARY_FORME_VERBE, $html);
-                    array_push($baseWords, $baseWord);
-                    echo $wordForm['word'] . " -> " . $baseWord . PHP_EOL;
-                }
-            }
-
-            if (isset($wordForm['form_adjective']) && $wordForm['form_adjective']) {
-                $html = getHtmlWordWiktionary($wordForm['word']);
-                if ($html) {
-                    $baseWord = getBaseWord(WIKTIONARY_FORME_ADJECTIF, $html);
-                    array_push($baseWords, $baseWord);
-                    echo $wordForm['word'] . " -> " . $baseWord . PHP_EOL;
-                }
-            }
-
-        }
-
-        file_put_contents($pathBaseWordsJson, json_encode($baseWords));
-
-    } else {
-        $baseWords = json_decode(file_get_contents($pathBaseWordsJson), true);
-    }
-
-    echo count($baseWords) . " total base words" . PHP_EOL;
-
-    return $baseWords;
-
-}
-
-
 function getBaseWord($idDom,$html) {
 
     $form = $html->find("span[id=" . $idDom . "]", 0);

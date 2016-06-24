@@ -2,6 +2,7 @@
 
 namespace App\Builder;
 
+use App\Builder\Steps\SaveNGram;
 use Log;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Builder\Steps\SaveWordList;
 use App\Builder\Steps\SaveWordsHTML;
 use App\Builder\Steps\SaveConjugationsHTML;
+use App\Builder\Steps\SaveWordBaseList;
 
 class Builder extends Model {
 
@@ -36,11 +38,13 @@ class Builder extends Model {
                 $step = new SaveConjugationsHTML();
                 $step->saveConjugationsHTML();
                 break;
-            case 'save_words_and_forms':
-                // TODO: save words and forms
+            case 'save_word_base_list':
+                $step = new SaveWordBaseList();
+                $step->saveWordBaseList();
                 break;
-            case 'save_ngrams':
-                // TODO: create ontology wikipedia
+            case 'save_ngram':
+                $step = new SaveNGram();
+                $step->saveNGram();
                 break;
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database

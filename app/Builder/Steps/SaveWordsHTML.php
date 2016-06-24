@@ -6,6 +6,7 @@
 
 namespace App\Builder\Steps;
 
+use App\Builder\Wiktionary\WiktionaryWordHtml;
 use Log;
 use App\Builder\Wiktionary\WiktionaryLanguageSection;
 use Illuminate\Database\Eloquent\Model;
@@ -24,8 +25,8 @@ class SaveWordsHTML extends Model {
 		$params['cache'] = base_path() . "/data/" . LANGUAGE . "/htmls/";
 
 		// Save the words
-		$wiktionaryLanguageSection = new WiktionaryLanguageSection();
-		$wiktionaryLanguageSection->saveWordHtmlJustLanguage($words, $params);
+		$wiktionaryWordHTML = new WiktionaryWordHtml();
+		$wiktionaryWordHTML->saveWordHtmls($words, $params);
 
 	}
 

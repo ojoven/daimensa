@@ -65,6 +65,27 @@ class WiktionaryForm {
 
     }
 
+    public function isBaseWord($wordHTML) {
+
+        // We'll just retrieve: names, verbs, adjectives,
+        // adverbs, prepositions and pronouns, leaving out all the others
+
+        if ($wordHTML) {
+
+            if ($this->isFormInWord(WIKTIONARY_COMMON_NAME, $wordHTML)
+                || $this->isFormInWord(WIKTIONARY_VERB, $wordHTML)
+                || $this->isFormInWord(WIKTIONARY_ADJECTIVE, $wordHTML)
+                || $this->isFormInWord(WIKTIONARY_ADVERBE, $wordHTML)
+                || $this->isFormInWord(WIKTIONARY_PREPOSITION, $wordHTML)
+                || $this->isFormInWord(WIKTIONARY_PRONOUN_PERSONAL, $wordHTML)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    }
+
     /** GET FORMS (RETRIEVE ONLY FORMS THAT EXIST) FOR EACH WORD **/
     public function getWordFormsRetrieveForms($word) {
 
