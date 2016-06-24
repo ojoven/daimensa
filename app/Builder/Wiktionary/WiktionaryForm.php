@@ -114,7 +114,7 @@ class WiktionaryForm {
 
     }
 
-    public function isFormInWord($idDom,$html) {
+    public function isFormInWord($idDom, $html) {
 
         if ($html) {
             $form = $html->find("span[id=" . $idDom . "]");

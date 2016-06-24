@@ -16,7 +16,6 @@ use App\Builder\FileManager;
 
 class SaveWordBaseList extends Model {
 
-	/** 1st step, get word list **/
 	public function saveWordBaseList() {
 
 		$baseWordsPath = base_path() . '/data/' . LANGUAGE . '/jsons/basewords.json';
@@ -29,6 +28,8 @@ class SaveWordBaseList extends Model {
 			// GET ALL WORDS
 			$wordList = new WordList();
 			$words = $wordList->getWordList();
+
+			$words = array('a commercial');
 
 			$wiktionaryWordHTML = new WiktionaryWordHtml();
 			$wiktionaryForm = new WiktionaryForm();
