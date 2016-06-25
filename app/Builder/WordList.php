@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder;
+use Log;
 
 class WordList {
 
@@ -22,7 +23,8 @@ class WordList {
 		$file = FileManager::getFile($pathFileWordList);
 
 		if (!$file) {
-			Log::info('The word list is not generated for ' . LANGUAGE . '. Please generate it first with "php artisan save_word_list ' . $lang . '" command');
+			Log::info('The word list is not generated for ' . LANGUAGE . '. Please generate it first with "php artisan builder save_word_list ' . LANGUAGE . '" command');
+			die();
 		} else {
 			return json_decode($file, true);
 		}

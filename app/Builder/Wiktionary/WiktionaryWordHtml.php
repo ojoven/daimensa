@@ -55,7 +55,7 @@ class WiktionaryWordHtml {
         $pathWordDirectory = $params['cache'] . $firstCharacter;
         $pathWord = $pathWordDirectory . "/" . $word . ".html";
 
-        if (!file_exists($pathWord)) {
+        if (!file_exists($pathWord) || isset($params['overwrite'])) {
 
             $urlWiktionaryWord = 'http://' . LANGUAGE . '.wiktionary.org/wiki/' . $word;
             Log::info($urlWiktionaryWord);

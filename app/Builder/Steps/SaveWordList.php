@@ -77,7 +77,7 @@ class SaveWordList extends Model {
 
 		$params['category'] = $category;
 		$params['cache_path'] = base_path() . "/data/" . LANGUAGE . "/categories/" . $category . ".json";
-		$params['url_base'] = 'http://' . $this->lang . '.wiktionary.org'; // We'll be using the FR version of Wiktionary as it was the first language scrapped
+		$params['url_base'] = 'http://' . LANGUAGE . '.wiktionary.org';
 		$params['url_first_page'] = WIKTIONARY_CATEGORY_URL_BASE . $category;
 		$params['next_page'] = WIKTIONARY_NEXT_PAGE;
 

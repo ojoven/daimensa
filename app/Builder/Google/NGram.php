@@ -15,46 +15,43 @@ class NGram {
 
         $pathNGramsFiles = base_path() . '/data/' . LANGUAGE . '/n-grams/files/';
         $pathNGramsHTML = base_path() . '/data/' . LANGUAGE . '/n-grams/htmls/' . $ngram . 'gram.html';
+        if (!file_exists($pathNGramsHTML)) {
+            Log::info('/data/' . LANGUAGE . '/n-grams/htmls/' . $ngram . 'gram.html file is missing');
+            die();
+        }
+
         $content = file_get_contents($pathNGramsHTML);
 
-        if ($content) {
+        $html = SimpleHtmlDom::str_get_html($content);
+        if ($html) {
 
-            $html = SimpleHtmlDom::str_get_html($content);
-            if ($html) {
+            // Let's go link by link retrieving the files and parsing the info downloaded
+            foreach ($html->find('a') as $link) {
 
-                // Let's go link by link retrieving the files and parsing the info downloaded
-                foreach ($html->find('a') as $link) {
+                // Vars and paths
+                $char = $link->plaintext;
+                $pathCompressed = $pathNGramsFiles . 'compressed/' . $char . '.gz';
+                $pathUnCompressed = $pathNGramsFiles . 'uncompressed/' . $char . '.csv';
 
-                    // Vars and paths
-                    $char = $link->plaintext;
-                    $pathCompressed = $pathNGramsFiles . 'compressed/' . $char . '.gz';
-                    $pathUnCompressed = $pathNGramsFiles . 'uncompressed/' . $char . '.csv';
+                Log::info('Retrieving file for ' . $char);
 
-                    Log::info('Retrieving file for ' . $char);
+                // If the files are not downloaded
+                if (!file_exists($pathUnCompressed)) {
 
-                    // If the files are not downloaded
-                    if (!file_exists($pathUnCompressed)) {
+                    if (!file_exists($pathCompressed)) {
 
-                        if (!file_exists($pathCompressed)) {
+                        // We get the compressed file from Google
+                        $contentGz = file_get_contents($link->href);
 
-                            // We get the compressed file from Google
-                            $contentGz = file_get_contents($link->href);
-
-                            // We save it to our system
-                            FileManager::saveFile($pathCompressed, $contentGz);
-                        }
-
-                        // We uncompress it
-                        FileManager::uncompressFile($pathCompressed, $pathUnCompressed);
-
+                        // We save it to our system
+                        FileManager::saveFile($pathCompressed, $contentGz);
                     }
 
-                    $unCompressed = file_get_contents($pathUnCompressed);
-
+                    // We uncompress it
+                    FileManager::uncompressFile($pathCompressed, $pathUnCompressed);
                 }
 
             }
-
         }
 
     }

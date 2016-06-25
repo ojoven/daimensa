@@ -59,6 +59,12 @@ class Builder extends Model {
                 $step = new WiktionaryWordHtml();
                 $step->saveWordHTML($additional, array('cache' => base_path() . '/data/' . LANGUAGE . '/htmls/'));
                 break;
+
+            // Temporary
+            case 'recreate_htmls_multiwords':
+                $step = new SaveWordsHTML();
+                $step->saveWordsMultiHTML();
+                break;
         }
 
     }

@@ -14,7 +14,6 @@ use App\Builder\WordList;
 
 class SaveWordsHTML extends Model {
 
-	/** 1st step, get words **/
 	public function saveWordsHTML() {
 
 		// Get the word list from previous step
@@ -27,6 +26,29 @@ class SaveWordsHTML extends Model {
 		// Save the words
 		$wiktionaryWordHTML = new WiktionaryWordHtml();
 		$wiktionaryWordHTML->saveWordHtmls($words, $params);
+
+	}
+
+	public function saveWordsMultiHTML() {
+
+		// Get the word list from previous step
+		$wordList = new WordList();
+		$words = $wordList->getWordList();
+
+		$validWords = [];
+		foreach ($words as $word) {
+			if (strpos($word, ' ') !== false) { // If the word has an space in it (multi) we'll save it
+				$validWords[] = $word;
+			}
+		}
+
+		// Define path Cache / Data files
+		$params['cache'] = base_path() . "/data/" . LANGUAGE . "/htmls/";
+		$params['overwrite'] = true;
+
+		// Save the words
+		$wiktionaryWordHTML = new WiktionaryWordHtml();
+		$wiktionaryWordHTML->saveWordHtmls($validWords, $params);
 
 	}
 

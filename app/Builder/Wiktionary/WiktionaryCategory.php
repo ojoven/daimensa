@@ -4,6 +4,7 @@ namespace App\Builder\Wiktionary;
 use App\Builder\SimpleHtmlDom;
 use App\Lib\WordFunctions;
 use App\Builder\FileManager;
+use Log;
 
 class WiktionaryCategory {
 
@@ -40,6 +41,7 @@ class WiktionaryCategory {
 
                 // Let's get the url of the new category page
                 $url = $this->_getNextPageUrlCategoryPage($html, $params);
+                Log::info($url);
 
                 // If $url false, we've reached the end, let's escape the loop
                 if (!$url) {

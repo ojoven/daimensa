@@ -17,6 +17,8 @@ class SaveNGram extends Model {
 	/** SAVE NGRAM (1) **/
 	public function saveNGram() {
 
+		$nGram = new NGram();
+		$nGram->saveNGrams(1); // 1-grams
 
 
 	}
