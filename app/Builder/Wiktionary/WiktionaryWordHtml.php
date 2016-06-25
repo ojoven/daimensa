@@ -3,6 +3,7 @@
 namespace App\Builder\Wiktionary;
 use App\Lib\WordFunctions;
 use App\Builder\SimpleHtmlDom;
+use App\Models\Word;
 use Log;
 
 class WiktionaryWordHtml {
@@ -10,8 +11,10 @@ class WiktionaryWordHtml {
     /** GET WORD HTML **/
     public function getHtmlWordWiktionary($word) {
 
+        $wordSlug = WordFunctions::wordToSlug($word);
+
         // First we check if we've already saved it
-        $path = base_path() . "/data/" . LANGUAGE . "/htmls/" . WordFunctions::getFirstCharacter($word) . "/" . $word . ".html";
+        $path = base_path() . "/data/" . LANGUAGE . "/htmls/" . WordFunctions::getFirstCharacter($word) . "/" . $wordSlug . ".html";
 
         if (file_exists($path)) {
             $content = file_get_contents($path);
@@ -46,13 +49,17 @@ class WiktionaryWordHtml {
     /** SAVE SINGLE WORD HTML **/
     public function saveWordHTML($word, $params) {
 
+        $word = WordFunctions::wordToSlug($word);
+
         $firstCharacter = WordFunctions::getFirstCharacter($word);
         $pathWordDirectory = $params['cache'] . $firstCharacter;
         $pathWord = $pathWordDirectory . "/" . $word . ".html";
 
         if (!file_exists($pathWord)) {
 
-            $urlWiktionaryWord = 'http://' . LANGUAGE . '.wiktionary.org/wiki/' . WordFunctions::wordForURL($word);
+            $urlWiktionaryWord = 'http://' . LANGUAGE . '.wiktionary.org/wiki/' . $word;
+            Log::info($urlWiktionaryWord);
+
             $html = SimpleHtmlDom::file_get_html($urlWiktionaryWord);
 
             if ($html && WordFunctions::isValidWord($word)) {
@@ -63,6 +70,8 @@ class WiktionaryWordHtml {
                 if (!is_dir($pathWordDirectory)) {
                     mkdir($pathWordDirectory);
                 }
+
+                Log::info($pathWord);
 
                 file_put_contents($pathWord, $justLanguageHtml);
 

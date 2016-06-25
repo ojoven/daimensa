@@ -3,6 +3,7 @@
 namespace App\Builder;
 
 use App\Builder\Steps\SaveNGram;
+use App\Builder\Wiktionary\WiktionaryWordHtml;
 use Log;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +16,7 @@ use App\Builder\Steps\SaveWordBaseList;
 class Builder extends Model {
 
     // Build cards for a word
-    public function build($task, $language) {
+    public function build($task, $language, $additional = '') {
 
         // Get Language Builder
         $languageBuilder = LanguageBuilderFactory::getLanguageBuilder($language);
@@ -49,7 +50,14 @@ class Builder extends Model {
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database
             case 'test':
-                echo Log::info('Woks OK');
+                echo Log::info('Woks OK: ' . $additional);
+                break;
+
+            // Single words (testing)
+            case 'save_single_word_html':
+                echo Log::info('Save: ' . $additional);
+                $step = new WiktionaryWordHtml();
+                $step->saveWordHTML($additional, array('cache' => base_path() . '/data/' . LANGUAGE . '/htmls/'));
                 break;
         }
 

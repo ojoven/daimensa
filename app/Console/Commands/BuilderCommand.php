@@ -13,7 +13,7 @@ class BuilderCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'builder {task} {lang}';
+    protected $signature = 'builder {task} {lang} {additional?}';
 
     /**
      * The console command description.
@@ -31,6 +31,6 @@ class BuilderCommand extends Command
     {
         Log::useFiles('php://stdout', 'info');
         $builder = new Builder();
-        $builder->build($this->argument('task'), $this->argument('lang'));
+        $builder->build($this->argument('task'), $this->argument('lang'), $this->argument('additional'));
     }
 }

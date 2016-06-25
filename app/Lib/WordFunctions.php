@@ -48,7 +48,7 @@ class WordFunctions {
 
     }
 
-    public static function wordForURL($word) {
+    public static function wordToSlug($word) {
 
         return str_replace(' ', '_', $word);
 
