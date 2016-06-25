@@ -8,6 +8,8 @@ use Log;
 
 class NGram {
 
+    protected $minYear = 1960;
+
     /** GOOGLE N-GRAM ONTOLOGY **/
 
     // Download and parse the NGrams
@@ -30,8 +32,8 @@ class NGram {
 
                 // Vars and paths
                 $char = $link->plaintext;
-                $pathCompressed = $pathNGramsFiles . 'compressed/' . $char . '.gz';
-                $pathUnCompressed = $pathNGramsFiles . 'uncompressed/' . $char . '.csv';
+                $pathCompressed = $pathNGramsFiles . 'compressed/' . $ngram . 'gram/' . $char . '.gz';
+                $pathUnCompressed = $pathNGramsFiles . 'uncompressed/' . $ngram . 'gram/' . $char . '.csv';
 
                 Log::info('Retrieving file for ' . $char);
 
@@ -49,8 +51,62 @@ class NGram {
 
                     // We uncompress it
                     FileManager::uncompressFile($pathCompressed, $pathUnCompressed);
+
+                    // After uncompressing it, we unlink the compressed one
+                    unlink($pathCompressed);
                 }
 
+            }
+        }
+
+    }
+
+    // NGrams CSV to JSON files
+    function ngramsToJSONFiles($ngram) {
+
+        $words = array();
+        $pathCSVs = base_path() . "/data/" . LANGUAGE . "/n-grams/files/uncompressed/" . $ngram . "gram/";
+        $pathJSONs = base_path() . "/data/" . LANGUAGE . "/n-grams/partials/" . $ngram . "gram/";
+
+        $dir = new \DirectoryIterator($pathCSVs);
+        foreach ($dir as $fileInfo) {
+            if (!$fileInfo->isDot()) {
+                $fileName = $fileInfo->getFilename();
+                $char = str_replace('.csv', '', $fileName); // To get the char from a.csv
+
+                Log::info('Creating JSON for letter ' . $char);
+
+                $handle = fopen($pathCSVs . "/" . $fileName, "r");
+                if ($handle) {
+
+                    while (($line = fgets($handle)) !== false) {
+
+                        $wordArray = preg_split('/\s+/', $line);
+
+                        $wordWord = $wordArray[0]; // It includes, in some cases additional info separated by _
+                        $wordSlug = strtolower(explode("_", $wordWord)[0]);
+                        $wordYear = (int)$wordArray[1];
+                        $wordFrequency = $wordArray[2];
+
+                        if ($wordYear > $this->minYear) {
+
+                            if (isset($words[$wordSlug])) {
+                                // If the word was already added, we sum the frequency of that year
+                                $words[$wordSlug] = $words[$wordSlug] + $wordFrequency;
+                            } else {
+                                // If the word didn't exist yet, we create a new index
+                                $words[$wordSlug] = $wordFrequency;
+                            }
+                        }
+
+                    }
+
+                    fclose($handle);
+                }
+
+                // Now we have generated the words array, we save it
+                $wordsJSON = json_encode($words);
+                FileManager::saveFile($pathJSONs . $char . '.json', $wordsJSON);
             }
         }
 
@@ -78,7 +134,7 @@ class NGram {
         $pathPartials = base_path() . "/data/" . LANGUAGE . "/n-grams/partials/" . $ngram . "gram/";
         $pathFinal = base_path() . "/data/" . LANGUAGE . "/n-grams/final/" . $ngram . "gram/words.json";
 
-        $dir = new DirectoryIterator($pathPartials);
+        $dir = new \DirectoryIterator($pathPartials);
         foreach ($dir as $fileInfo) {
             if (!$fileInfo->isDot()) {
                 $fileName = $fileInfo->getFilename();
