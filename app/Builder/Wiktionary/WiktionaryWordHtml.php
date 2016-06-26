@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder\Wiktionary;
+use App\Builder\FileManager;
 use App\Lib\WordFunctions;
 use App\Builder\SimpleHtmlDom;
 use App\Models\Word;
@@ -58,7 +59,6 @@ class WiktionaryWordHtml {
         if (!file_exists($pathWord) || isset($params['overwrite'])) {
 
             $urlWiktionaryWord = 'http://' . LANGUAGE . '.wiktionary.org/wiki/' . $word;
-            Log::info($urlWiktionaryWord);
 
             $html = SimpleHtmlDom::file_get_html($urlWiktionaryWord);
 
@@ -66,15 +66,7 @@ class WiktionaryWordHtml {
 
                 $justLanguageHtml = $this->getJustHtmlFromLanguage(WIKTIONARY_ID_LANGUAGE, $html);
 
-                // If no folder, we create it
-                if (!is_dir($pathWordDirectory)) {
-                    mkdir($pathWordDirectory);
-                }
-
-                Log::info($pathWord);
-
-                file_put_contents($pathWord, $justLanguageHtml);
-
+                FileManager::saveFile($pathWord, $justLanguageHtml);
                 return $html;
             }
 

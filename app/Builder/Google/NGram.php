@@ -73,8 +73,11 @@ class NGram {
             if (!$fileInfo->isDot()) {
                 $fileName = $fileInfo->getFilename();
                 $char = str_replace('.csv', '', $fileName); // To get the char from a.csv
+                $targetJson = $pathJSONs . $char . '.json';
 
                 Log::info('Creating JSON for letter ' . $char);
+
+                if (file_exists($targetJson)) continue;
 
                 $handle = fopen($pathCSVs . "/" . $fileName, "r");
                 if ($handle) {
@@ -84,6 +87,10 @@ class NGram {
                         $wordArray = preg_split('/\s+/', $line);
 
                         $wordWord = $wordArray[0]; // It includes, in some cases additional info separated by _
+                        if (!$wordArray || count($wordArray)<3) {
+                            Log::info($line);
+                            continue;
+                        }
                         $wordSlug = strtolower(explode("_", $wordWord)[0]);
                         $wordYear = (int)$wordArray[1];
                         $wordFrequency = $wordArray[2];
@@ -106,7 +113,7 @@ class NGram {
 
                 // Now we have generated the words array, we save it
                 $wordsJSON = json_encode($words);
-                FileManager::saveFile($pathJSONs . $char . '.json', $wordsJSON);
+                FileManager::saveFile($targetJson, $wordsJSON);
             }
         }
 
@@ -117,13 +124,11 @@ class NGram {
 
         $path = base_path() . '/data/' . LANGUAGE . '/jsons/' . $ngram . 'grams.json';
         if (file_exists($path)) {
-            $words = json_decode(file_get_contents($path),true);
+            $words = json_decode(file_get_contents($path), true);
         } else {
-            $words = $this->mergeNgrams($ngram);
+            Log::info('The ngram is not generated for the language');
+            die();
         }
-
-        // Let's sort by frequency
-        arsort($words);
 
         return $words;
     }
@@ -132,17 +137,21 @@ class NGram {
 
         $words = array();
         $pathPartials = base_path() . "/data/" . LANGUAGE . "/n-grams/partials/" . $ngram . "gram/";
-        $pathFinal = base_path() . "/data/" . LANGUAGE . "/n-grams/final/" . $ngram . "gram/words.json";
+        $pathFinal = base_path() . "/data/" . LANGUAGE . "/jsons/" . $ngram . "grams.json";
 
         $dir = new \DirectoryIterator($pathPartials);
         foreach ($dir as $fileInfo) {
             if (!$fileInfo->isDot()) {
                 $fileName = $fileInfo->getFilename();
+                Log::info('Adding ' . $fileName . ' words to JSON');
                 $words = array_merge($words, json_decode(file_get_contents($pathPartials . "/" . $fileName), true));
             }
         }
 
-        file_put_contents($pathFinal, json_encode($words));
+        // Sort words by frequency
+        arsort($words);
+
+        FileManager::saveFile($pathFinal, json_encode($words));
 
         return $words;
 

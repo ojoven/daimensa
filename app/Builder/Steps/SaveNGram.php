@@ -18,8 +18,9 @@ class SaveNGram extends Model {
 	public function saveNGram() {
 
 		$nGram = new NGram();
-		//$nGram->saveNGrams(1); // 1-grams
-		$nGram->ngramsToJSONFiles(1);
+		$nGram->saveNGrams(1); // Save 1-grams to CSVs
+		$nGram->ngramsToJSONFiles(1); // CSVs to JSONs
+		$nGram->mergeNgrams(1); // Merge the NGrams
 
 	}
 

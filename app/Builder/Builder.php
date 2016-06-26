@@ -2,6 +2,7 @@
 
 namespace App\Builder;
 
+use App\Builder\Google\NGram;
 use App\Builder\Steps\SaveNGram;
 use App\Builder\Wiktionary\WiktionaryWordHtml;
 use Log;
@@ -58,6 +59,26 @@ class Builder extends Model {
                 echo Log::info('Save: ' . $additional);
                 $step = new WiktionaryWordHtml();
                 $step->saveWordHTML($additional, array('cache' => base_path() . '/data/' . LANGUAGE . '/htmls/'));
+                break;
+
+            case 'revert_ngram': // TMP
+                $ngram = new NGram();
+                $words = $ngram->getWordsNgram(1);
+                arsort($words);
+                $path = base_path() . '/data/en/jsons/1grams_2.json';
+                FileManager::saveFile($path, json_encode($words));
+                break;
+
+            case 'show_generated_ngram':
+                $ngram = new NGram();
+                $words = $ngram->getWordsNgram(1);
+                $counter = 0;
+                $numWords = count($words);
+                foreach ($words as $word => $frequency) {
+                    if ($counter>500) break;
+                    $counter++;
+                    echo $counter . '/' . $numWords . ': ' . $word . '(' . $frequency . ')' . PHP_EOL;
+                }
                 break;
 
             // Temporary

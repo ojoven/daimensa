@@ -29,8 +29,6 @@ class SaveWordBaseList extends Model {
 			$wordList = new WordList();
 			$words = $wordList->getWordList();
 
-			$words = array('a commercial');
-
 			$wiktionaryWordHTML = new WiktionaryWordHtml();
 			$wiktionaryForm = new WiktionaryForm();
 
@@ -52,6 +50,9 @@ class SaveWordBaseList extends Model {
 		} else {
 
 			$baseWords = json_decode($baseWordsJson, true);
+			foreach ($baseWords as $baseWord) {
+				Log::info($baseWord);
+			}
 
 		}
 
