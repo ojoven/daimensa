@@ -21,78 +21,6 @@ class WordList {
         return $words;
     }
 
-    /** Words and forms **/
-    function getWordsAndForms($justFrequent) {
-
-        $suffix = $justFrequent ? "_freq" : "";
-        $path = base_path() . "/data/" . LANGUAGE . "/forms/wordsAndForms" . $suffix . ".json";
-        if (file_exists($path)) {
-            return json_decode(file_get_contents($path), true);
-        }
-
-        $words = $allWords = $this->getAllWords();
-        $words = ($justFrequent)? $this->mergeJustFrequentCategoryWords($words) : $this->mergeAllCategoryWords($words);
-        $invalidCategories = getInvalidCategories();
-
-        $wordsAndForms = array();
-
-        $wiktionaryWordHtml = new WiktionaryWordHtml();
-        $wiktionaryForm = new WiktionaryForm();
-        $wiktionarySustantive = new WiktionaryWordSustantive();
-        $wiktionaryVerb = new WiktionaryWordVerb();
-        $wiktionaryAdjective = new WiktionaryWordAdjective();
-
-        $wordModel = new Word();
-
-        $numWords = count($words);
-
-        foreach ($words as $index=>$word) {
-
-            Functions::log($index . "/" . $numWords . ": " . $word);
-
-            if ($this->wordBelongsToInvalidCategory($word, $allWords, $invalidCategories)) continue;
-
-            $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
-
-            // Name Forms
-            $isName = ($wiktionaryForm->isFormInWord(WIKTIONARY_COMMON_NAME, $html)) ? true : false;
-            if ($isName) {
-                $forms = Functions::getLeafs($wiktionarySustantive->getFormsSustantive($html));
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
-            }
-
-            // Adjective Forms
-            $isAdjective = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADJECTIVE, $html)) ? true : false;
-            if ($isAdjective) {
-                $forms = Functions::getLeafs($wiktionaryAdjective->getFormsAdjective($html));
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
-            }
-
-            // Ver Conjugations
-            $isVerb = ($wiktionaryForm->isFormInWord(WIKTIONARY_VERB, $html)) ? true : false;
-            if ($isVerb) {
-                $conjugations = $wiktionaryVerb->getConjugations($word);
-                $forms = array();
-                if (!empty($conjugations)) {
-                    $forms = $wiktionaryVerb->getFormsFromConjugations($conjugations);
-                }
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
-            }
-
-            $isAdverb = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
-
-            // The word belongs to himself
-            if ($isAdverb || $isAdjective || $isName || $isVerb || !$justFrequent) {
-                $wordsAndForms[$word] = $word;
-            }
-
-        }
-
-        file_put_contents($path, json_encode($wordsAndForms));
-
-        return $words;
-    }
-
     /** Category **/
     public function wordBelongsToInvalidCategory($word, $words, $invalidCategories) {
 
@@ -150,15 +78,6 @@ class WordList {
         }
 
         Functions::log($count . " total words and expressions");
-    }
-
-    private function _addFormsToWordsAndForms($forms, $word, $wordsAndForms) {
-
-        foreach ($forms as $form) {
-            $wordsAndForms[$form] = $word;
-        }
-
-        return $wordsAndForms;
     }
 
 }

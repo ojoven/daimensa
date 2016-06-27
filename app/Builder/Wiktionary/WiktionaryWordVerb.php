@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Builder\Wiktionary;
+use App\Builder\FileManager;
 use App\Builder\SimpleHtmlDom;
 use App\Lib\Functions;
 use App\Lib\WordFunctions;
@@ -62,13 +63,7 @@ class WiktionaryWordVerb extends WiktionaryWord {
             $html = SimpleHtmlDom::str_get_html($content);
 
             if ($html) {
-
-                // Create the dir if not available
-                if (!is_dir($pathDir)) {
-                    mkdir($pathDir);
-                }
-
-                file_put_contents($path, $content);
+                FileManager::saveFile($path, $content);
             }
 
             return ($html) ? $html : false;

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 // Steps
 use App\Builder\Steps\SaveWordList;
+use App\Builder\Steps\SaveWordForms;
 use App\Builder\Steps\SaveWordsHTML;
 use App\Builder\Steps\SaveConjugationsHTML;
 use App\Builder\Steps\SaveWordBaseList;
@@ -43,6 +44,10 @@ class Builder extends Model {
             case 'save_word_base_list':
                 $step = new SaveWordBaseList();
                 $step->saveWordBaseList();
+                break;
+            case 'save_word_forms':
+                $step = new SaveWordForms();
+                $step->saveWordForms();
                 break;
             case 'save_ngram':
                 $step = new SaveNGram();

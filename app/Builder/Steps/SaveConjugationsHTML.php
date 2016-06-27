@@ -1,6 +1,6 @@
 <?php
 /** ===========================================
- * STEP 3: SAVE CONJUGATIONS HTMLS
+ * STEP: SAVE CONJUGATIONS HTMLS
  * ============================================**/
 // We'll save the verbs' conjugations' HTMLs
 
@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class saveConjugationsHTML extends Model {
 
-	/** 1st step, get words **/
 	public function saveConjugationsHTML() {
 
 		if (CONJUGATE_VERBS) {

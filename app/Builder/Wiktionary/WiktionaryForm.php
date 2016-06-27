@@ -2,69 +2,83 @@
 
 namespace App\Builder\Wiktionary;
 
+use App\Lib\Functions;
+use Log;
+
 class WiktionaryForm {
 
+    /** WORD FORMS **/
+    function getWordForms($words) {
 
-    public function getWordsWithForms($words, $params) {
+        $path = base_path() . "/data/" . LANGUAGE . "/jsons/wordForms.json";
+        if (file_exists($path)) {
+            return json_decode(file_get_contents($path), true);
+        }
 
-        //$params['cache_path'] = base_path() . "/data/wiktionary/wordforms.json";
+        $wordsAndForms = array();
 
-        if (!file_exists($params['cache_path'])) {
+        $wiktionaryWordHtml = new WiktionaryWordHtml();
+        $wiktionaryForm = new WiktionaryForm();
+        $wiktionarySustantive = new WiktionaryWordSustantive();
+        $wiktionaryVerb = new WiktionaryWordVerb();
+        $wiktionaryAdjective = new WiktionaryWordAdjective();
 
-            // Initialize
-            $wordForms = array();
+        $numWords = count($words);
 
-            // Retrieve the word forms for each word
-            foreach ($words as $index=>$word) {
+        foreach ($words as $index=>$word) {
 
-                $wordForm = $this->getWordForms($word);
-                array_push($wordForms, $wordForm);
+            Log::info($index . "/" . $numWords . ": " . $word);
+            $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
 
+            // Name Forms
+            $isName = ($wiktionaryForm->isFormInWord(WIKTIONARY_COMMON_NAME, $html)) ? true : false;
+            if ($isName) {
+                $forms = Functions::getLeafs($wiktionarySustantive->getFormsSustantive($html));
+                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
             }
 
-            // Let's save into the cache
-            file_put_contents($params['cache_path'], json_encode($wordForms));
+            // Adjective Forms
+            $isAdjective = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADJECTIVE, $html)) ? true : false;
+            if ($isAdjective) {
+                $forms = Functions::getLeafs($wiktionaryAdjective->getFormsAdjective($html));
+                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+            }
 
-        } else {
+            // Verb Conjugations
+            $isVerb = ($wiktionaryForm->isFormInWord(WIKTIONARY_VERB, $html)) ? true : false;
+            if ($isVerb) {
+                $conjugations = $wiktionaryVerb->getConjugations($word);
+                $forms = array();
+                if (!empty($conjugations)) {
+                    $forms = $wiktionaryVerb->getFormsFromConjugations($conjugations);
+                }
+                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+            }
 
-            // We already have the cache, let's retrieve the words with forms from there
-            $wordForms = json_decode(file_get_contents($params['cache_path']), true);
+            $isAdverb = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
 
-        }
-
-        return $wordForms;
-
-    }
-
-    /** GET FORMS (TRUE/FALSE) FOR EACH WORD **/
-    public function getWordForms($word) {
-
-        $wordForm = array();
-        $wiktionaryWordHtml = new WiktionaryWordHtml();
-        $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
-
-        $wordForm['word'] = $word;
-
-        // We'll just retrieve: names and forms, verbs and forms, adjectives and forms,
-        // adverbs and prepositions, leaving out all the others
-
-        if ($html) {
-
-            $wordForm['name'] = ($this->isFormInWord(WIKTIONARY_COMMON_NAME, $html)) ? true : false;
-            $wordForm['form_name'] = ($this->isFormInWord(WIKTIONARY_COMMON_NAME_FORM, $html)) ? true : false;
-            $wordForm['verb'] = ($this->isFormInWord(WIKTIONARY_VERB, $html)) ? true : false;
-            $wordForm['form_verb'] = ($this->isFormInWord(WIKTIONARY_VERB_FORM, $html)) ? true : false;
-            $wordForm['adjective'] = ($this->isFormInWord(WIKTIONARY_ADJECTIVE, $html)) ? true : false;
-            $wordForm['form_adjective'] = ($this->isFormInWord(WIKTIONARY_ADJECTIVE_FORM, $html)) ? true : false;
-            $wordForm['adverb'] = ($this->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
-            $wordForm['preposition'] = ($this->isFormInWord(WIKTIONARY_PREPOSITION, $html)) ? true : false;
+            // The word belongs to himself
+            if ($isAdverb || $isAdjective || $isName || $isVerb || !$justFrequent) {
+                $wordsAndForms[$word] = $word;
+            }
 
         }
 
-        return $wordForm;
+        file_put_contents($path, json_encode($wordsAndForms));
 
+        return $words;
     }
 
+    private function _addFormsToWordsAndForms($forms, $word, $wordsAndForms) {
+
+        foreach ($forms as $form) {
+            $wordsAndForms[$form] = $word;
+        }
+
+        return $wordsAndForms;
+    }
+
+    /** BASE WORDS **/
     public function isBaseWord($wordHTML) {
 
         // We'll just retrieve: names, verbs, adjectives,
@@ -86,7 +100,18 @@ class WiktionaryForm {
 
     }
 
-    /** GET FORMS (RETRIEVE ONLY FORMS THAT EXIST) FOR EACH WORD **/
+    /** IS FORM IN WORD? **/
+    public function isFormInWord($idDom, $html) {
+
+        if ($html) {
+            $form = $html->find("span[id=" . $idDom . "]");
+            return ($form) ? true : false;
+        }
+
+        return false;
+    }
+
+    /** QUARANTINE: GET FORMS (RETRIEVE ONLY FORMS THAT EXIST) FOR EACH WORD **/
     public function getWordFormsRetrieveForms($word) {
 
         $wiktionaryWordHtml = new WiktionaryWordHtml();
@@ -111,17 +136,6 @@ class WiktionaryForm {
         }
 
         return $forms;
-
-    }
-
-    public function isFormInWord($idDom, $html) {
-
-        if ($html) {
-            $form = $html->find("span[id=" . $idDom . "]");
-            return ($form) ? true : false;
-        }
-
-        return false;
 
     }
 
