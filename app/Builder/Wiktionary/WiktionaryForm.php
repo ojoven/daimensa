@@ -2,7 +2,9 @@
 
 namespace App\Builder\Wiktionary;
 
+use App\Builder\FileManager;
 use App\Lib\Functions;
+use App\Lib\WordFunctions;
 use Log;
 
 class WiktionaryForm {
@@ -25,9 +27,10 @@ class WiktionaryForm {
 
         $numWords = count($words);
 
-        foreach ($words as $index=>$word) {
+        foreach ($words as $index => $word) {
 
             Log::info($index . "/" . $numWords . ": " . $word);
+
             $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
 
             // Name Forms
@@ -58,9 +61,10 @@ class WiktionaryForm {
             $isAdverb = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
 
             // The word belongs to himself
-            if ($isAdverb || $isAdjective || $isName || $isVerb || !$justFrequent) {
+            if ($isAdverb || $isAdjective || $isName || $isVerb) {
                 $wordsAndForms[$word] = $word;
             }
+
 
         }
 
@@ -72,10 +76,22 @@ class WiktionaryForm {
     private function _addFormsToWordsAndForms($forms, $word, $wordsAndForms) {
 
         foreach ($forms as $form) {
-            $wordsAndForms[$form] = $word;
+            if ($this->_isValidForm($form)) {
+                $wordsAndForms[$form] = $word;
+            }
         }
 
         return $wordsAndForms;
+    }
+
+    private function _isValidForm($form) {
+
+        if (strpos($form, '/')!==FALSE) {
+            return false;
+        }
+
+        return true;
+
     }
 
     /** BASE WORDS **/

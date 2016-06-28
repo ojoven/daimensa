@@ -25,6 +25,8 @@ class SaveWordForms extends Model {
 		$wordList = new WordList();
 		$baseWords = $wordList->getBaseWordList();
 
+		//$baseWords = array('gigantesque', 'dépasser', 'longueur'); // Test words
+
 		$wordsAndForms = array();
 		foreach ($baseWords as $baseWord) {
 			$wiktionaryWordForm = new WiktionaryForm();
