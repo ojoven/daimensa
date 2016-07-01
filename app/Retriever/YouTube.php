@@ -28,6 +28,11 @@ class YouTube {
 	/** MAIN: GET VIDEOS YOUTUBE **/
 	public function retrieveYouTubeVideos() {
 
+		$url = "http://video.google.com/timedtext?lang=fr&v=COL_Ty6MWjs";
+		$xml = file_get_contents($url);
+		$this->_extractCaptionsFromXML($xml);
+		die();
+
 		$this->youtube = new \Google_Service_YouTube($this->client);
 
 		for ($i = 0; $i < $this->maxPages; $i++) {
@@ -156,6 +161,7 @@ class YouTube {
 
 			$video['caption']['text'] = $this->_extractTextFromCaptions($xml);
 			$video['caption']['words'] = $this->_extractWordsFromCaptionText($video['caption']['text']);
+			$video['caption']['captions'] = $this->_extractCaptionsFromXML($xml);
 
 			print_r($video);
 			die();
@@ -259,6 +265,27 @@ class YouTube {
 		arsort($wordsAndFrequency);
 
 		return $wordsAndFrequency;
+
+	}
+
+	private function _extractCaptionsFromXML($xmlString) {
+
+		$finalCaptions = array();
+		$xml = simplexml_load_string($xmlString);
+
+		foreach ($xml->text as $caption) {
+
+			//$finalCaption['caption'] = $caption[0];
+			foreach ($caption->attributes() as $attribute=>$value) {
+				$finalCaption[$attribute] = $value;
+			}
+			$finalCaption['end'] = $finalCaption['start'] + $finalCaption['dur'];
+			$finalCaptions[] = $finalCaption;
+
+		}
+
+		print_r($finalCaptions);
+		die();
 
 	}
 
