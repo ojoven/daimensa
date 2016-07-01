@@ -4,23 +4,23 @@ namespace App\Console\Commands;
 
 use Log;
 use Illuminate\Console\Command;
-use App\ContentRetriever\ContentRetriever;
+use App\Retriever\Retriever;
 
-class ContentRetrieverCommand extends Command
+class RetrieverCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'content_retriever {task} {lang} {additional?}';
+    protected $signature = 'retriever {task} {lang} {additional?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Build the data related to a language';
+    protected $description = 'Retrieve the content for the lang';
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class ContentRetrieverCommand extends Command
     public function handle()
     {
         Log::useFiles('php://stdout', 'info');
-        $builder = new ContentRetriever();
+        $builder = new Retriever();
         $builder->retrieve($this->argument('task'), $this->argument('lang'), $this->argument('additional'));
     }
 }
