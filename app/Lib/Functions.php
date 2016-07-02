@@ -24,4 +24,13 @@ class Functions {
         return $leafs;
     }
 
+    // ISO DURATION
+    public static function ISO8601ToUnixTime($duration) {
+
+        $durationObject = new \DateInterval($duration);
+        $durationUnixTime = $durationObject->s + ($durationObject->i * 60) + ($durationObject->h * 60 * 60);
+
+        return $durationUnixTime;
+    }
+
 }

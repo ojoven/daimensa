@@ -2,6 +2,7 @@
 
 namespace App\Retriever;
 
+use App\Lib\Functions;
 use Log;
 use App\Builder\LanguageBuilderFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +24,10 @@ class Retriever extends Model {
 			case 'youtube':
 				$youtubeModel = new YouTube();
 				$youtubeModel->retrieveYouTubeVideos();
+				break;
+
+			case 'test':
+				Log::info(Functions::ISO8601ToUnixTime('PT6M17S'));
 				break;
 		}
 

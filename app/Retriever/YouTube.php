@@ -2,11 +2,13 @@
 
 namespace App\Retriever;
 
+use App\Lib\Functions;
 use App\Models\Lesson;
 use App\Models\LessonWord;
 use App\Models\YoutubeVideo;
+use App\Models\YoutubeVideoCaption;
 use Log;
-use Illuminate\Support\Facades\DB;
+use DB;
 
 class YouTube {
 
@@ -16,6 +18,7 @@ class YouTube {
 
 	protected $maxResults = 2;
 	protected $maxPages = 1;
+	protected $minLengthValidCaption = 600;
 
 	protected $captionUrlBase = 'https://www.youtube.com/api/timedtext';
 	protected $videoUrlBase = 'https://www.youtube.com/watch';
@@ -128,8 +131,10 @@ class YouTube {
 			// First we'll save the data we want in an array
 			foreach ($result['items'] as $item) {
 
+				Log::info($item['contentDetails']['duration']);
+
 				$videoStatistics[$item['id']] = array(
-					'duration' => $item['contentDetails']['duration'],
+					'duration' => Functions::ISO8601ToUnixTime($item['contentDetails']['duration']),
 					'definition' => $item['contentDetails']['definition'],
 					'viewCount' => $item['statistics']['viewCount'],
 					'likeCount' => $item['statistics']['likeCount'],
@@ -162,6 +167,7 @@ class YouTube {
 			$video['caption']['text'] = $this->_extractTextFromCaptions($xml);
 			$video['caption']['words'] = $this->_extractWordsFromCaptionText($video['caption']['text']);
 			$video['caption']['captions'] = $this->_extractCaptionsFromXML($xml);
+			$video['proportion_words'] = strlen($video['caption']['text'] / $video['duration']);
 
 		}
 
@@ -294,8 +300,12 @@ class YouTube {
 
 		foreach ($videos as $video) {
 
+
+			if (!$this->_isValidYoutubeVideo($video)) continue; // We won't save existing / invalid videos
+
 			Log::info($video['id'] . ': ' . $video['title'] . ' -> ' . $video['duration']);
 
+			DB::transaction(function($video) use ($video) {
 
 				// SAVE THE LESSON
 				$lessonDb = array(
@@ -309,13 +319,17 @@ class YouTube {
 
 				$lesson = Lesson::create($lessonDb);
 
+				$lessonId = $lesson->id;
+				Log::info($lessonId);
+
 				// SAVE THE CUSTOM YOUTUBE VIDEO PARAMS
 
 				$youtubeVideoDb = array(
-					'lesson_id' => $lesson->id,
+					'lesson_id' => $lessonId,
 					'youtube_id' => $video['id'],
 					'channel_id' => $video['channelId'],
-					'duration' => strtotime($video['duration']),
+					'duration' => $video['duration'],
+					'proportion_words' => $video['proportion_words'],
 					'definition' => $video['definition'],
 					'view_count' => $video['viewCount'],
 					'like_count' => $video['likeCount'],
@@ -331,18 +345,60 @@ class YouTube {
 				foreach ($video['caption']['words'] as $word => $frequency) {
 
 					$lessonWordDb = array(
-						'lesson_id' => $lesson->id,
+						'lesson_id' => $lessonId,
 						'word' => $word,
 						'frequency' => $frequency,
 					);
 
-
 					LessonWord::create($lessonWordDb);
-
 				}
+
+				// SAVE THE VIDEO CAPTIONS
+
+				foreach ($video['caption']['captions'] as $caption) {
+
+					$captionDb = array(
+						'lesson_id' => $lessonId,
+						'caption' => $caption['caption'],
+						'start' => $caption['start'],
+						'end' => $caption['end'],
+						'duration' => $caption['dur'],
+					);
+
+					YoutubeVideoCaption::create($captionDb);
+				}
+
+			});
+
 
 
 		}
+
+	}
+
+	private function _isValidYoutubeVideo($video) {
+
+		// Check if it already exists
+		$existingVideo = YoutubeVideo::where('youtube_id', '=', $video['id'])->first();
+		if ($existingVideo) {
+			Log::info('The video ' . $video['id'] . ' is already stored');
+			return false;
+		}
+
+		// Check if the captions XML are valid (for the language)
+		if (empty($video['caption']['captions'])) {
+			Log::info('The video ' . $video['id'] . ' has not valid captions');
+			return false;
+		}
+
+		// Let's check if the caption is long enough
+		$lengthCaption = strlen($video['caption']['text']);
+		if ($lengthCaption < $this->minLengthValidCaption) {
+			Log::info('The caption for video ' . $video['id'] . ' is not long enough');
+			return false;
+		}
+
+		return true;
 
 	}
 
