@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model {
 
+    protected $fillable = array('lang', 'title', 'description', 'text', 'url', 'type');
     const LESSON_TYPE_YOUTUBE = 'youtube';
 
     /** GET LAST LESSONS **/

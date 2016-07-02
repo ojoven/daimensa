@@ -2,7 +2,11 @@
 
 namespace App\Retriever;
 
+use App\Models\Lesson;
+use App\Models\LessonWord;
+use App\Models\YoutubeVideo;
 use Log;
+use Illuminate\Support\Facades\DB;
 
 class YouTube {
 
@@ -10,10 +14,11 @@ class YouTube {
 	protected $youtube;
 	protected $caption = 'closedCaption';
 
-	protected $maxResults = 5;
+	protected $maxResults = 2;
 	protected $maxPages = 1;
 
 	protected $captionUrlBase = 'https://www.youtube.com/api/timedtext';
+	protected $videoUrlBase = 'https://www.youtube.com/watch';
 
 	public function __construct() {
 
@@ -27,11 +32,6 @@ class YouTube {
 
 	/** MAIN: GET VIDEOS YOUTUBE **/
 	public function retrieveYouTubeVideos() {
-
-		$url = "http://video.google.com/timedtext?lang=fr&v=COL_Ty6MWjs";
-		$xml = file_get_contents($url);
-		$this->_extractCaptionsFromXML($xml);
-		die();
 
 		$this->youtube = new \Google_Service_YouTube($this->client);
 
@@ -64,7 +64,7 @@ class YouTube {
 			$videos = $this->_parseVideos($videos);
 
 			// Add video statistics to videos
-			//$videos = $this->_addVideoListStatistics($videos);
+			$videos = $this->_addVideoListStatistics($videos);
 
 			// Add the captions
 			$videos = $this->_addVideoCaptions($videos);
@@ -154,7 +154,7 @@ class YouTube {
 	// Video Captions
 	private function _addVideoCaptions($videos) {
 
-		foreach ($videos as $video) {
+		foreach ($videos as &$video) {
 
 			$urlCaptions = $this->captionUrlBase . '?v=' . $video['id'] . '&lang=' . LANGUAGE;
 			$xml = file_get_contents($urlCaptions);
@@ -162,9 +162,6 @@ class YouTube {
 			$video['caption']['text'] = $this->_extractTextFromCaptions($xml);
 			$video['caption']['words'] = $this->_extractWordsFromCaptionText($video['caption']['text']);
 			$video['caption']['captions'] = $this->_extractCaptionsFromXML($xml);
-
-			print_r($video);
-			die();
 
 		}
 
@@ -273,19 +270,22 @@ class YouTube {
 		$finalCaptions = array();
 		$xml = simplexml_load_string($xmlString);
 
-		foreach ($xml->text as $caption) {
+		if (isset($xml->text)) { // Valid XML?
 
-			//$finalCaption['caption'] = $caption[0];
-			foreach ($caption->attributes() as $attribute=>$value) {
-				$finalCaption[$attribute] = $value;
+			foreach ($xml->text as $caption) {
+
+				$finalCaption['caption'] = (string) $caption[0];
+				foreach ($caption->attributes() as $attribute=>$value) {
+					$finalCaption[$attribute] = (string) $value;
+				}
+				$finalCaption['end'] = $finalCaption['start'] + $finalCaption['dur'];
+				$finalCaptions[] = $finalCaption;
+
 			}
-			$finalCaption['end'] = $finalCaption['start'] + $finalCaption['dur'];
-			$finalCaptions[] = $finalCaption;
 
 		}
 
-		print_r($finalCaptions);
-		die();
+		return $finalCaptions;
 
 	}
 
@@ -295,6 +295,52 @@ class YouTube {
 		foreach ($videos as $video) {
 
 			Log::info($video['id'] . ': ' . $video['title'] . ' -> ' . $video['duration']);
+
+
+				// SAVE THE LESSON
+				$lessonDb = array(
+					'lang' => LANGUAGE,
+					'title' => $video['title'],
+					'description' => $video['description'],
+					'text' => $video['caption']['text'],
+					'url' => $this->videoUrlBase . '?v=' . $video['id'],
+					'type' => Lesson::LESSON_TYPE_YOUTUBE
+				);
+
+				$lesson = Lesson::create($lessonDb);
+
+				// SAVE THE CUSTOM YOUTUBE VIDEO PARAMS
+
+				$youtubeVideoDb = array(
+					'lesson_id' => $lesson->id,
+					'youtube_id' => $video['id'],
+					'channel_id' => $video['channelId'],
+					'duration' => strtotime($video['duration']),
+					'definition' => $video['definition'],
+					'view_count' => $video['viewCount'],
+					'like_count' => $video['likeCount'],
+					'dislike_count' => $video['dislikeCount'],
+					'favorite_count' => $video['favoriteCount'],
+					'comment_count' => $video['commentCount'],
+					'published_date' => $video['date'],
+				);
+
+				YoutubeVideo::create($youtubeVideoDb);
+
+				// SAVE THE WORDS
+				foreach ($video['caption']['words'] as $word => $frequency) {
+
+					$lessonWordDb = array(
+						'lesson_id' => $lesson->id,
+						'word' => $word,
+						'frequency' => $frequency,
+					);
+
+
+					LessonWord::create($lessonWordDb);
+
+				}
+
 
 		}
 
