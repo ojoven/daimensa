@@ -16,7 +16,7 @@
         </div>
 
         <!-- VIDEO TITLE -->
-        <div class="inferior-title">
+        <div class="infra-title">
             <?php echo $lesson['title']; ?>
         </div>
     </div>

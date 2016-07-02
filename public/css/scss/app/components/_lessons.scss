@@ -13,31 +13,64 @@ $lessonHeight: 200px;
 
   @include br(5px);
 
-  .body {
-    border: 1px solid $greySilver;
-  }
-
 }
 
 // YouTube
 .lesson.youtube {
 
+  // Supra title
+  .supra-title {
+    font-size: 14px;
+    color: $greySilver;
+  }
+
+  // Candidates
+  .main-candidate {
+    font-size: 35px;
+    display: block;
+    margin: 10px 0;
+  }
+
+  .other-candidates {
+    display: block;
+    margin: 10px;
+    font-size: 14px;
+  }
+
+  .infra-title {
+    font-size: 14px;
+    color: $greySilver;
+    display: block;
+    margin: 10px 0;
+  }
+
+  // Thumbnail container
   .thumbnail-container {
 
+    cursor: pointer;
     width: 300px;
     height: 200px;
     position: relative;
 
+    // Play icon
     &:after {
 
+      $paddingLeftPlayIcon: 5px;
       @include center();
-      content: '\f16a';
+      @include br(50%);
+      content: '\f04b';
       font-family: FontAwesome;
       color: $white;
-      font-size: 70px;
+      font-size: 44px;
+      background: $mainColor;
+      width: 72px - $paddingLeftPlayIcon;
+      height: 72px;
+      line-height: 1.6;
+      padding-left: $paddingLeftPlayIcon;
 
     }
 
+    // Thumbnail
     .thumbnail {
 
       width: 100%;

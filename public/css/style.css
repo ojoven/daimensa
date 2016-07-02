@@ -504,16 +504,34 @@ header {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px; }
-  /* line 16, scss/app/components/_lessons.scss */
-  .lesson .body {
-    border: 1px solid #ccc; }
 
-/* line 25, scss/app/components/_lessons.scss */
+/* line 22, scss/app/components/_lessons.scss */
+.lesson.youtube .supra-title {
+  font-size: 14px;
+  color: #ccc; }
+/* line 28, scss/app/components/_lessons.scss */
+.lesson.youtube .main-candidate {
+  font-size: 35px;
+  display: block;
+  margin: 10px 0; }
+/* line 34, scss/app/components/_lessons.scss */
+.lesson.youtube .other-candidates {
+  display: block;
+  margin: 10px;
+  font-size: 14px; }
+/* line 40, scss/app/components/_lessons.scss */
+.lesson.youtube .infra-title {
+  font-size: 14px;
+  color: #ccc;
+  display: block;
+  margin: 10px 0; }
+/* line 48, scss/app/components/_lessons.scss */
 .lesson.youtube .thumbnail-container {
+  cursor: pointer;
   width: 300px;
   height: 200px;
   position: relative; }
-  /* line 31, scss/app/components/_lessons.scss */
+  /* line 56, scss/app/components/_lessons.scss */
   .lesson.youtube .thumbnail-container:after {
     position: absolute;
     left: 50%;
@@ -523,11 +541,19 @@ header {
     -ms-transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    content: '\f16a';
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    content: '\f04b';
     font-family: FontAwesome;
     color: #ffffff;
-    font-size: 70px; }
-  /* line 41, scss/app/components/_lessons.scss */
+    font-size: 44px;
+    background: #004179;
+    width: 67px;
+    height: 72px;
+    line-height: 1.6;
+    padding-left: 5px; }
+  /* line 74, scss/app/components/_lessons.scss */
   .lesson.youtube .thumbnail-container .thumbnail {
     width: 100%;
     height: 100%;

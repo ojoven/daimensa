@@ -34,7 +34,7 @@ class WiktionaryForm {
             $pathWordFile = base_path() . '/data/' . LANGUAGE . '/forms/' . WordFunctions::getFirstCharacter($word) . '/' . WordFunctions::wordToSlug($word);
 
             if ($wordFileJSON = FileManager::getFile($pathWordFile)) {
-                $wordsAndForms = array_merge($wordsAndForms, json_decode($wordFileJSON, true));
+                //$wordsAndForms = array_merge($wordsAndForms, json_decode($wordFileJSON, true));
             } else {
 
                 $specificWordForms = array();
