@@ -30,7 +30,7 @@ class SaveWordForms extends Model {
 		$wordsAndForms = array();
 		foreach ($baseWords as $baseWord) {
 			$wiktionaryWordForm = new WiktionaryForm();
-			$wiktionaryWordForm->getWordForms($baseWords);
+			$forms = $wiktionaryWordForm->getWordForms($baseWords);
 		}
 
 	}

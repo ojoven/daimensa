@@ -31,40 +31,54 @@ class WiktionaryForm {
 
             Log::info($index . "/" . $numWords . ": " . $word);
 
-            $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
+            $pathWordFile = base_path() . '/data/' . LANGUAGE . '/forms/' . WordFunctions::getFirstCharacter($word) . '/' . WordFunctions::wordToSlug($word);
 
-            // Name Forms
-            $isName = ($wiktionaryForm->isFormInWord(WIKTIONARY_COMMON_NAME, $html)) ? true : false;
-            if ($isName) {
-                $forms = Functions::getLeafs($wiktionarySustantive->getFormsSustantive($html));
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
-            }
+            if ($wordFileJSON = FileManager::getFile($pathWordFile)) {
+                $wordsAndForms = array_merge($wordsAndForms, json_decode($wordFileJSON, true));
+            } else {
 
-            // Adjective Forms
-            $isAdjective = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADJECTIVE, $html)) ? true : false;
-            if ($isAdjective) {
-                $forms = Functions::getLeafs($wiktionaryAdjective->getFormsAdjective($html));
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
-            }
+                $specificWordForms = array();
 
-            // Verb Conjugations
-            $isVerb = ($wiktionaryForm->isFormInWord(WIKTIONARY_VERB, $html)) ? true : false;
-            if ($isVerb) {
-                $conjugations = $wiktionaryVerb->getConjugations($word);
-                $forms = array();
-                if (!empty($conjugations)) {
-                    $forms = $wiktionaryVerb->getFormsFromConjugations($conjugations);
+                $html = $wiktionaryWordHtml->getHtmlWordWiktionary($word);
+
+                // Name Forms
+                $isName = ($wiktionaryForm->isFormInWord(WIKTIONARY_COMMON_NAME, $html)) ? true : false;
+                if ($isName) {
+                    $forms = Functions::getLeafs($wiktionarySustantive->getFormsSustantive($html));
+                    $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+                    $specificWordForms = $this->_addFormsToWordsAndForms($forms, $word, $specificWordForms);
                 }
-                $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+
+                // Adjective Forms
+                $isAdjective = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADJECTIVE, $html)) ? true : false;
+                if ($isAdjective) {
+                    $forms = Functions::getLeafs($wiktionaryAdjective->getFormsAdjective($html));
+                    $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+                    $specificWordForms = $this->_addFormsToWordsAndForms($forms, $word, $specificWordForms);
+                }
+
+                // Verb Conjugations
+                $isVerb = ($wiktionaryForm->isFormInWord(WIKTIONARY_VERB, $html)) ? true : false;
+                if ($isVerb) {
+                    $conjugations = $wiktionaryVerb->getConjugations($word);
+                    $forms = array();
+                    if (!empty($conjugations)) {
+                        $forms = $wiktionaryVerb->getFormsFromConjugations($conjugations);
+                    }
+                    $wordsAndForms = $this->_addFormsToWordsAndForms($forms, $word, $wordsAndForms);
+                    $specificWordForms = $this->_addFormsToWordsAndForms($forms, $word, $specificWordForms);
+                }
+
+                $isAdverb = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
+
+                // The word belongs to himself
+                if ($isAdverb || $isAdjective || $isName || $isVerb) {
+                    $wordsAndForms[$word] = $word;
+                    $specificWordForms[$word] = $word;
+                }
+
+                FileManager::saveFile($pathWordFile, json_encode($specificWordForms));
             }
-
-            $isAdverb = ($wiktionaryForm->isFormInWord(WIKTIONARY_ADVERBE, $html)) ? true : false;
-
-            // The word belongs to himself
-            if ($isAdverb || $isAdjective || $isName || $isVerb) {
-                $wordsAndForms[$word] = $word;
-            }
-
 
         }
 

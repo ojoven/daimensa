@@ -4,6 +4,7 @@ namespace App\Builder;
 
 use App\Builder\Google\NGram;
 use App\Builder\Steps\SaveNGram;
+use App\Builder\Steps\SaveSortWordsByFrequency;
 use App\Builder\Wiktionary\WiktionaryWordHtml;
 use Log;
 use Illuminate\Database\Eloquent\Model;
@@ -52,6 +53,10 @@ class Builder extends Model {
             case 'save_ngram':
                 $step = new SaveNGram();
                 $step->saveNGram();
+                break;
+            case 'save_sort_words_by_frequency':
+                $step = new SaveSortWordsByFrequency();
+                $step->saveSortWordsByFrequency();
                 break;
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database

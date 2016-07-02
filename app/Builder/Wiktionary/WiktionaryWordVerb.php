@@ -222,8 +222,10 @@ class WiktionaryWordVerb extends WiktionaryWord {
         $conjugations = $this->_getMainTableVerbsConjugations($conjugations, $tdNext->next_sibling(), $tense, 'past 1');
 
         $trNext = $trNext->next_sibling();
-        $tdNext = $trNext->find('td', 0);
-        $conjugations = $this->_getMainTableVerbsConjugations($conjugations, $tdNext->next_sibling(), $tense, 'past 2');
+        if ($trNext) {
+            $tdNext = $trNext->find('td', 0);
+            $conjugations = $this->_getMainTableVerbsConjugations($conjugations, $tdNext->next_sibling(), $tense, 'past 2');
+        }
 
         return $conjugations;
 
