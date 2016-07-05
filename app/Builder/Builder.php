@@ -65,6 +65,13 @@ class Builder extends Model {
                 break;
 
             // Single words (testing)
+            case 'test_forms':
+                $forms = json_decode(file_get_contents(base_path() . '/data/fr/jsons/wordForms.json'), true);
+                foreach ($forms as $form => $baseWord) {
+                    echo $form . ' -> ' . $baseWord . PHP_EOL;
+                }
+                break;
+
             case 'save_single_word_html':
                 echo Log::info('Save: ' . $additional);
                 $step = new WiktionaryWordHtml();
