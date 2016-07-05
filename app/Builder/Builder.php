@@ -3,8 +3,6 @@
 namespace App\Builder;
 
 use App\Builder\Google\NGram;
-use App\Builder\Steps\SaveNGram;
-use App\Builder\Steps\SaveSortWordsByFrequency;
 use App\Builder\Wiktionary\WiktionaryWordHtml;
 use Log;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +12,9 @@ use App\Builder\Steps\SaveWordList;
 use App\Builder\Steps\SaveWordForms;
 use App\Builder\Steps\SaveWordsHTML;
 use App\Builder\Steps\SaveConjugationsHTML;
+use App\Builder\Steps\SaveNGram;
 use App\Builder\Steps\SaveWordBaseList;
+use App\Builder\Steps\SaveWordFrequencies;
 
 class Builder extends Model {
 
@@ -54,9 +54,9 @@ class Builder extends Model {
                 $step = new SaveNGram();
                 $step->saveNGram();
                 break;
-            case 'save_sort_words_by_frequency':
-                $step = new SaveSortWordsByFrequency();
-                $step->saveSortWordsByFrequency();
+            case 'save_word_frequencies':
+                $step = new SaveWordFrequencies();
+                $step->SaveWordFrequencies();
                 break;
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database
@@ -65,13 +65,6 @@ class Builder extends Model {
                 break;
 
             // Single words (testing)
-            case 'test_forms':
-                $forms = json_decode(file_get_contents(base_path() . '/data/fr/jsons/wordForms.json'), true);
-                foreach ($forms as $form => $baseWord) {
-                    echo $form . ' -> ' . $baseWord . PHP_EOL;
-                }
-                break;
-
             case 'save_single_word_html':
                 echo Log::info('Save: ' . $additional);
                 $step = new WiktionaryWordHtml();
