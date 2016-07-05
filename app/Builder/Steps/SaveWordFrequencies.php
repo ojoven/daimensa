@@ -31,8 +31,6 @@ class SaveWordFrequencies extends Model {
 		$totalForms = count($forms);
 		$count = 0;
 
-		$forms = array_slice($forms, 0, 500);
-
 		foreach ($forms as $form => $baseWord) {
 			if (in_array($form, $wordGrams)) {
 
