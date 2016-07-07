@@ -60,42 +60,12 @@ class Builder extends Model {
                 break;
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database
-            case 'test':
-                echo Log::info('Woks OK: ' . $additional);
-                break;
 
-            // Single words (testing)
-            case 'save_single_word_html':
-                echo Log::info('Save: ' . $additional);
-                $step = new WiktionaryWordHtml();
-                $step->saveWordHTML($additional, array('cache' => base_path() . '/data/' . LANGUAGE . '/htmls/'));
-                break;
+            default:
+                // TESTS
+                $builderPlayground = new BuilderPlayground();
+                $builderPlayground->playground($task, $language, $additional);
 
-            case 'revert_ngram': // TMP
-                $ngram = new NGram();
-                $words = $ngram->getWordsNgram(1);
-                arsort($words);
-                $path = base_path() . '/data/en/jsons/1grams_2.json';
-                FileManager::saveFile($path, json_encode($words));
-                break;
-
-            case 'show_generated_ngram':
-                $ngram = new NGram();
-                $words = $ngram->getWordsNgram(1);
-                $counter = 0;
-                $numWords = count($words);
-                foreach ($words as $word => $frequency) {
-                    if ($counter>500) break;
-                    $counter++;
-                    echo $counter . '/' . $numWords . ': ' . $word . '(' . $frequency . ')' . PHP_EOL;
-                }
-                break;
-
-            // Temporary
-            case 'recreate_htmls_multiwords':
-                $step = new SaveWordsHTML();
-                $step->saveWordsMultiHTML();
-                break;
         }
 
     }
