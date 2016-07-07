@@ -11,6 +11,7 @@
 |
 */
 
+/** FRONT END **/
 // Home
 Route::get('/', 'IndexController@index');
 
@@ -22,3 +23,28 @@ Route::controller('api', 'ApiController');
 
 // HTML renders
 Route::controller('html', 'HtmlController');
+
+/** BACK END **/
+// Users (index)
+Route::get('/manager/users', 'Admin\UserController@index');
+
+// Users
+Route::controller('manager/users', 'Admin\UserController');
+
+// Words (index)
+Route::get('/manager/words', 'Admin\WordController@index');
+
+// Words
+Route::controller('manager/words', 'Admin\WordController');
+
+// Lessons (index)
+Route::get('/manager/lessons', 'Admin\LessonController@index');
+
+// Lessons
+Route::controller('manager/lessons', 'Admin\LessonController');
+
+// Dashboard (index)
+Route::get('/manager', 'Admin\IndexController@dashboard');
+
+// Dashboard (fallback)
+Route::controller('manager', 'Admin\IndexController');
