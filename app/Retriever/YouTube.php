@@ -16,8 +16,8 @@ class YouTube {
 	protected $youtube;
 	protected $caption = 'closedCaption';
 
-	protected $maxResults = 2;
-	protected $maxPages = 1;
+	protected $maxResults = 30;
+	protected $maxPages = 5;
 	protected $minLengthValidCaption = 600;
 
 	protected $captionUrlBase = 'https://www.youtube.com/api/timedtext';
@@ -38,10 +38,14 @@ class YouTube {
 
 		$this->youtube = new \Google_Service_YouTube($this->client);
 
+		$word = $this->_getYoutubeSearchQueryWord();
+
 		for ($i = 0; $i < $this->maxPages; $i++) {
 
+			Log::info('Getting page ' . ($i + 1) . ' for word ' . $word);
+
 			$options = array(
-				'q' => $this->_getYoutubeSearchQueryWord(),
+				'q' => $word,
 				'maxResults' => $this->maxResults,
 				'videoCaption' => $this->caption,
 				'relevanceLanguage' => LANGUAGE,
@@ -67,12 +71,15 @@ class YouTube {
 			$videos = $this->_parseVideos($videos);
 
 			// Add video statistics to videos
+			Log::info('Add video statistics to videos');
 			$videos = $this->_addVideoListStatistics($videos);
 
 			// Add the captions
+			Log::info('Add captions to videos');
 			$videos = $this->_addVideoCaptions($videos);
 
 			// We save the videos
+			Log::info('Save videos');
 			$this->_saveVideos($videos);
 
 		}
@@ -83,7 +90,7 @@ class YouTube {
 	private function _getYoutubeSearchQueryWord() {
 
 		// We get a random word from frequency 100 to 10.000
-		return 'maison';
+		return 'marché';
 	}
 
 	/** PARSE VIDEOS **/
@@ -131,8 +138,6 @@ class YouTube {
 			// First we'll save the data we want in an array
 			foreach ($result['items'] as $item) {
 
-				Log::info($item['contentDetails']['duration']);
-
 				$videoStatistics[$item['id']] = array(
 					'duration' => Functions::ISO8601ToUnixTime($item['contentDetails']['duration']),
 					'definition' => $item['contentDetails']['definition'],
@@ -160,6 +165,8 @@ class YouTube {
 	private function _addVideoCaptions($videos) {
 
 		foreach ($videos as &$video) {
+
+			Log::info('Retrieving captions for ' . $video['id'] . ' -> ' . $video['title']);
 
 			$urlCaptions = $this->captionUrlBase . '?v=' . $video['id'] . '&lang=' . LANGUAGE;
 			$xml = file_get_contents($urlCaptions);
@@ -284,7 +291,8 @@ class YouTube {
 				foreach ($caption->attributes() as $attribute=>$value) {
 					$finalCaption[$attribute] = (string) $value;
 				}
-				$finalCaption['end'] = $finalCaption['start'] + $finalCaption['dur'];
+				$finalCaption['end'] = (isset($finalCaption['start']) && isset($finalCaption['dur'])) ? $finalCaption['start'] + $finalCaption['dur'] : 0;
+				$finalCaption['dur'] = (isset($finalCaption['dur'])) ? $finalCaption['dur'] : 0;
 				$finalCaptions[] = $finalCaption;
 
 			}
@@ -303,8 +311,6 @@ class YouTube {
 
 			if (!$this->_isValidYoutubeVideo($video)) continue; // We won't save existing / invalid videos
 
-			Log::info($video['id'] . ': ' . $video['title'] . ' -> ' . $video['duration']);
-
 			DB::transaction(function($video) use ($video) {
 
 				// SAVE THE LESSON
@@ -320,7 +326,6 @@ class YouTube {
 				$lesson = Lesson::create($lessonDb);
 
 				$lessonId = $lesson->id;
-				Log::info($lessonId);
 
 				// SAVE THE CUSTOM YOUTUBE VIDEO PARAMS
 

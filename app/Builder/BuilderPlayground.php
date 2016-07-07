@@ -4,6 +4,8 @@ namespace App\Builder;
 
 use App\Builder\Google\NGram;
 use App\Builder\Wiktionary\WiktionaryWordHtml;
+use App\Lib\Functions;
+use App\Models\Lesson;
 use Log;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +22,25 @@ class BuilderPlayground extends Model {
 
 			case 'test':
 				echo Log::info('Woks OK: ' . $additional);
+				break;
+
+			case 'playground_1':
+				$lessonModel = new Lesson();
+				$lessons = $lessonModel->getLastLessons();
+
+				$wordFrequencies = json_decode(file_get_contents(base_path() . '/data/fr/jsons/wordFrequencies.json'), true);
+				$wordForms = json_decode(file_get_contents(base_path() . '/data/fr/jsons/wordForms.json'), true);
+
+				foreach ($lessons[0]['words'] as $word) {
+
+					$wordBase = (array_key_exists($word['word'], $wordForms)) ? $wordForms[$word['word']] : $word['word'];
+
+					if (array_key_exists($wordBase, $wordFrequencies)) {
+						echo Functions::colorize($wordBase, 'SUCCESS') . PHP_EOL;
+					} else {
+						echo Functions::colorize($wordBase, 'ERROR') . PHP_EOL;
+					}
+				}
 				break;
 
 			case 'word_in_freq':
