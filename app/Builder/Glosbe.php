@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Models\Others;
+namespace App\Builder;
+use App\Builder\FileManager;
 use App\Lib\WordFunctions;
+use Log;
 
 // This is a dictionary API from https://glosbe.com/a-api
 // Codes used for $from and $to params -> ISO 693-3 https://en.wikipedia.org/wiki/List_of_ISO_639-3_codes
@@ -45,13 +47,12 @@ class Glosbe {
                     array_push($translations, $parsedTranslation);
 
                 }
+            } else {
+                Log::info('Not retrieved');
             }
 
             // Save to cache (and create directories if needed)
-            if (!is_dir($pathBaseTo)) { mkdir($pathBaseTo); }
-            if (!is_dir($pathBaseFirstChar)) { mkdir($pathBaseFirstChar); }
-            file_put_contents($path, json_encode($translations));
-
+            FileManager::saveFile($path, json_encode($translations));
         }
 
 
@@ -98,10 +99,7 @@ class Glosbe {
                 }
 
                 // Save to cache (and create directories if needed)
-                if (!is_dir($pathBaseTo)) { mkdir($pathBaseTo); }
-                if (!is_dir($pathBaseFirstChar)) { mkdir($pathBaseFirstChar); }
-                file_put_contents($path, json_encode($examples));
-
+                FileManager::saveFile($path, json_encode($examples));
             }
 
         }

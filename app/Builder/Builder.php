@@ -15,6 +15,7 @@ use App\Builder\Steps\SaveConjugationsHTML;
 use App\Builder\Steps\SaveNGram;
 use App\Builder\Steps\SaveWordBaseList;
 use App\Builder\Steps\SaveWordFrequencies;
+use App\Builder\Steps\SaveWordsGlosbe;
 
 class Builder extends Model {
 
@@ -57,6 +58,10 @@ class Builder extends Model {
             case 'save_word_frequencies':
                 $step = new SaveWordFrequencies();
                 $step->SaveWordFrequencies();
+                break;
+            case 'save_words_glosbe':
+                $step = new SaveWordsGlosbe();
+                $step->SaveWordsGlosbe();
                 break;
             case 'save_to_db':
                 // TODO: We'll save the words, frequencies, ontologies, etc. into the database
